@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <script type="text/javascript" charset="utf-8" src="Scripts/jquery-1.11.0.min.js"></script>
+    <link type="text/css" href="Scripts/bootstrap-3.3.1/css/bootstrap.min.css" rel="stylesheet" />
+    <script type="text/javascript" charset="utf-8" src="Scripts/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+    <script src="bootstrap-pagination.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            BootstrapPagination($(".pagination"), {
+                total: 101,
+                pageSize: 20,
+                pageIndex: 2,
+                pageGroupSize: 5,
+                pageChanged: function (pageIndex, pageSize) {
+                    alert("page changed. pageIndex:" + pageIndex + ",pageSize:" + pageSize)
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <nav>
+        <ul class="pagination">
+        </ul>
+    </nav>
+</body>
+</html>
