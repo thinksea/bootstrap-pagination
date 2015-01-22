@@ -2,8 +2,6 @@
 
 /*
 定义一个 javascript 分页插件，基于 bootstrap 样式。
-version：0.2.0
-last change：2015-1-21
 */
 var BootstrapPagination = function (obj, option) {
     this.options = {
@@ -20,9 +18,6 @@ var BootstrapPagination = function (obj, option) {
         nextGroupPageText: "下一组", //下一组分页导航按钮文本。
         firstPageText: "首页", //首页导航按钮文本。
         lastPageText: "尾页", //尾页导航按钮文本。
-        showGotoInput: false, //指示是否显示页码输入框。
-        gotoInputPlaceholder: "GO", //设置页码输入框中显示的提示文本。
-        enterTimeout: 800, //接受用户输入内容的延迟时间。单位：毫秒
         pageChanged: function () { }, //当分页更改时引发此事件。
     };
 
@@ -99,7 +94,7 @@ var BootstrapPagination = function (obj, option) {
         }
     }
 
-    // 创建分页按钮。
+    // 创建分页按钮数据。
     this.createPageButton = function (text, pageNum) {
         var li = $("<li></li>");
         var a = $("<a href='javascript:;'>" + this.options.pageNumberText.replace("{pageNumber}", text) + "</a>");
@@ -129,49 +124,6 @@ var BootstrapPagination = function (obj, option) {
                 .replace("{total}", this.options.total)
                 .replace("{pageNumber}", this.options.total > 0 ? this.options.pageIndex + 1 : 0)
                 .replace("{pageCount}", this.getPageCount());
-    }
-
-    // 创建页码输入框。
-    this.createGoto = function () {
-        var li = $('<li style="width: 50px; float: left;"></li>');
-        var inputgroup = $('<div class="input-group"></div>');
-        li.append(inputgroup);
-        var input = $('<input type="text" class="form-control" placeholder="' + this.options.gotoInputPlaceholder + '" />');
-        inputgroup.append(input);
-
-        input.off('keyup').on('keyup', $.proxy(this.gotoEvents, this));
-
-        //<input type="text" class="form-control" placeholder="GO" />
-        //    <div class="input-group-btn">
-        //        <button type="button" class="btn btn-default">GO</button>
-        //    </div>
-        return li;
-    }
-
-    this.timeoutId = 0;
-    //处理输入页码事件。
-    this.gotoEvents = function (event) {
-        var ctl=$(event.target);
-        var sNum = ctl.val();
-        var reg = /^\d+$/gi;
-        if (!reg.test(sNum)) {
-            //alert("输入的页码格式无效。");
-            ctl.parent().addClass("has-error");
-            return false;
-        }
-        ctl.parent().removeClass("has-error");
-        var pageNum = parseInt(sNum) - 1;
-        if (pageNum > (this.getPageCount() - 1)) {
-            pageNum = this.getPageCount() - 1;
-        }
-        if (pageNum < 0) {
-            pageNum = 0;
-        }
-        var that = this;
-        clearTimeout(this.timeoutId);
-        this.timeoutId = setTimeout(function () {
-            that.doPageChanged(pageNum, that.options.pageSize);
-        }, this.options.enterTimeout);
     }
 
     //将控件的内容呈现到指定的编写器中。此方法主要由控件开发人员使用。
@@ -268,12 +220,6 @@ var BootstrapPagination = function (obj, option) {
             else {
                 lis[lis.length] = this.createPageButton(this.options.lastPageText);
             }
-        }
-        //#endregion
-
-        //#region 处理页码输入框
-        if (this.options.showGotoInput) {
-            lis[lis.length] = this.createGoto();
         }
         //#endregion
 
