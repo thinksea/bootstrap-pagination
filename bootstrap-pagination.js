@@ -2,99 +2,59 @@
 
 /*
 定义一个 javascript 分页插件，基于 bootstrap 样式。
-version：0.2.0
-last change：2015-1-21
+version：0.3.0
+last change：2015-1-23
 */
 var BootstrapPagination = function (obj, option) {
     this.options = {
-        total: 0, //记录总数。
-        pageSize: 20, //指示每页最多显示的记录数量。
-        pageIndex: 0, //当前页索引编号。从其开始（从0开始）的整数。
-        pageGroupSize: 10, //指示分页导航栏中最多显示的页索引数量。
-        leftFormateString: "本页{count}条记录/共{total}条记录", //位于导航条左侧的输出信息格式化字符串
-        rightFormateString: "第{pageNumber}页/共{pageCount}页", //位于导航条右侧的输出信息格式化字符串
-        pageNumberText: "{pageNumber}", //页码文本格式。
-        prevPageText: "上一页", //上一页导航按钮文本。
-        nextPageText: "下一页", //下一页导航按钮文本。
-        prevGroupPageText: "上一组", //上一组分页导航按钮文本。
-        nextGroupPageText: "下一组", //下一组分页导航按钮文本。
-        firstPageText: "首页", //首页导航按钮文本。
-        lastPageText: "尾页", //尾页导航按钮文本。
-        showGotoInput: false, //指示是否显示页码输入框。
-        gotoInputPlaceholder: "GO", //设置页码输入框中显示的提示文本。
-        enterTimeout: 800, //接受用户输入内容的延迟时间。单位：毫秒
-        pageChanged: function () { }, //当分页更改时引发此事件。
+        //记录总数。
+        total: 0,
+        //指示每页最多显示的记录数量。
+        pageSize: 20,
+        //当前页索引编号。从其开始（从0开始）的整数。
+        pageIndex: 0,
+        //指示分页导航栏中最多显示的页索引数量。
+        pageGroupSize: 10,
+        //位于导航条左侧的输出信息格式化字符串
+        leftFormateString: "本页{count}条记录/共{total}条记录",
+        //位于导航条右侧的输出信息格式化字符串
+        rightFormateString: "第{pageNumber}页/共{pageCount}页",
+        //页码文本格式化字符串。
+        pageNumberFormateString: "{pageNumber}",
+        //上一页导航按钮文本。
+        prevPageText: "上一页",
+        //下一页导航按钮文本。
+        nextPageText: "下一页",
+        //上一组分页导航按钮文本。
+        prevGroupPageText: "上一组",
+        //下一组分页导航按钮文本。
+        nextGroupPageText: "下一组",
+        //首页导航按钮文本。
+        firstPageText: "首页",
+        //尾页导航按钮文本。
+        lastPageText: "尾页",
+        //指示是否显示页码输入框。
+        showGotoInput: false,
+        //设置页码输入框中显示的提示文本。
+        gotoInputPlaceholder: "GO",
+        //接受用户输入内容的延迟时间。单位：毫秒
+        enterTimeout: 800,
+        //当分页更改后引发此事件。
+        pageChanged: function (pageIndex, pageSize) { },
     };
 
-    ////验证页码输入控件。
-    //function Validate(InputPageNumberControlID) {
-    //    var pnCtl = document.getElementById(InputPageNumberControlID);
-    //    if (pnCtl.showErrorMessage == true) {
-    //        return false;
-    //    }
-    //    var reg = /^\d+$/gi;
-    //    if (!reg.test(pnCtl.value)) {
-    //        pnCtl.showErrorMessage = true;
-    //        alert("输入的页码格式无效。");
-    //        pnCtl.showErrorMessage = false;
-    //        pnCtl.focus();
-    //        return false;
-    //    }
-    //    return true;
-    //}
-
-
-    ///*
-    //功能：为指定的 URI 设置参数。
-    //参数：
-    //    uri：一个可能包含参数的 uri 字符串。
-    //    Name：参数名。
-    //    Value：新的参数值。
-    //返回值：处理后的 uri。
-    //备注：如果参数存在则更改它的值，否则添加这个参数。
-    //*/
-    //this.SetUriParameter=function (uri, Name, Value) {
-    //    uri = uri.replace(/(\s|\?)*$/g, "");//消除 URI 中无参数但存在问号“...?”这种 URI 中的问号。
-    //    if (uri.indexOf("?") == -1) {//如果无参数。
-    //        return uri + "?" + Name + "=" + encodeURIComponent(Value);
-    //    }
-    //    else {//如果有参数。
-    //        var reg = new RegExp("(\\?|&)" + Name.replace(/\$/gi, "\\$") + "=([^&]*)", "gi");//测试可能被替换的参数的正则表达式。
-    //        if (reg.test(uri)) {//如果存在同名参数。
-    //            return uri.replace(reg, "$1" + Name.replace(/\$/gi, "$$$$") + "=" + encodeURIComponent(Value));
-    //        }
-    //        else {//如果无同名参数。
-    //            return uri + "&" + Name + "=" + encodeURIComponent(Value);
-    //        }
-    //    }
-    //}
-
-    ////跳转到指定的页码。
-    //this.GotoPage=function (PageIndexParameter, InputPageNumberControlID) {
-    //    if (!Validate(InputPageNumberControlID)) {
-    //        return;
-    //    }
-    //    var pnCtl = document.getElementById(InputPageNumberControlID);
-    //    var pageIndex = parseInt(pnCtl.value) - 1;
-    //    document.location.href = this.SetUriParameter(document.location.href, PageIndexParameter, pageIndex);
-    //}
-
     // 获取分页总数。
-    this.getPageCount = function()
-    {
+    this.getPageCount = function () {
         return Math.floor((this.options.total + this.options.pageSize - 1) / this.options.pageSize);
     }
 
     // 获取当前页实际显示的记录数量。
-    this.getCurrentRecordsCount = function()
-    {
+    this.getCurrentRecordsCount = function () {
         var rCount = this.options.total - this.options.pageSize * this.options.pageIndex;
-        if (rCount > this.options.pageSize)
-        {
+        if (rCount > this.options.pageSize) {
             return this.options.pageSize;
         }
-        else
-        {
+        else {
             return rCount;
         }
     }
@@ -102,9 +62,9 @@ var BootstrapPagination = function (obj, option) {
     // 创建分页按钮。
     this.createPageButton = function (text, pageNum) {
         var li = $("<li></li>");
-        var a = $("<a href='javascript:;'>" + this.options.pageNumberText.replace("{pageNumber}", text) + "</a>");
+        var a = $("<a href='javascript:;'>" + this.options.pageNumberFormateString.replace("{pageNumber}", text) + "</a>");
         if (pageNum !== undefined && pageNum != this.options.pageIndex) {
-            a.off('click').on('click', $.proxy(this.doPageChanged, this, pageNum, this.options.pageSize));
+            a.off('click').on('click', $.proxy(this.pageIndex, this, pageNum));
         }
         li.append(a);
         if (pageNum !== undefined && pageNum == this.options.pageIndex) {
@@ -123,7 +83,7 @@ var BootstrapPagination = function (obj, option) {
         return li;
     }
 
-    //执行格式化字符串。
+    // 执行格式化字符串。
     this.doFormateString = function (formateString) {
         return formateString.replace("{count}", this.getCurrentRecordsCount())
                 .replace("{total}", this.options.total)
@@ -133,7 +93,7 @@ var BootstrapPagination = function (obj, option) {
 
     // 创建页码输入框。
     this.createGoto = function () {
-        var li = $('<li style="width: 50px; float: left;"></li>');
+        var li = $('<li class="gotoInput"></li>');
         var inputgroup = $('<div class="input-group"></div>');
         li.append(inputgroup);
         var input = $('<input type="text" class="form-control" placeholder="' + this.options.gotoInputPlaceholder + '" />');
@@ -149,9 +109,9 @@ var BootstrapPagination = function (obj, option) {
     }
 
     this.timeoutId = 0;
-    //处理输入页码事件。
+    // 处理输入页码事件。
     this.gotoEvents = function (event) {
-        var ctl=$(event.target);
+        var ctl = $(event.target);
         var sNum = ctl.val();
         var reg = /^\d+$/gi;
         if (!reg.test(sNum)) {
@@ -170,11 +130,11 @@ var BootstrapPagination = function (obj, option) {
         var that = this;
         clearTimeout(this.timeoutId);
         this.timeoutId = setTimeout(function () {
-            that.doPageChanged(pageNum, that.options.pageSize);
+            that.pageIndex(pageNum);
         }, this.options.enterTimeout);
     }
 
-    //将控件的内容呈现到指定的编写器中。此方法主要由控件开发人员使用。
+    // 呈现控件。
     this.render = function () {
         var lis = [];
         //#region 处理左侧输出信息格式化字符串
@@ -220,7 +180,7 @@ var BootstrapPagination = function (obj, option) {
         //#endregion
 
         //#region 页索引
-        if (this.options.pageNumberText) {
+        if (this.options.pageNumberFormateString) {
             var pageNum = this.options.pageIndex - Math.floor((this.options.pageGroupSize - 1) / 2); //分页页码。
             if (pageNum + this.options.pageGroupSize > this.getPageCount() - 1) {
                 pageNum = this.getPageCount() - this.options.pageGroupSize;
@@ -283,104 +243,90 @@ var BootstrapPagination = function (obj, option) {
         }
         //#endregion
 
-        //#region 显示页码输入控件。
-        //if (this.ShowInputPageNumber)
-        //{
-        //    string[] spInputPageNumberTitle = this.InputPageNumberTitle.Split(new string[] { "{0}" }, StringSplitOptions.None);
-        //if (spInputPageNumberTitle.Length > 0 && string.IsNullOrEmpty(spInputPageNumberTitle[0]) == false)
-        //{
-        //    System.Web.UI.WebControls.Literal lInputPageNumberTitle = new System.Web.UI.WebControls.Literal();
-        //    lInputPageNumberTitle.Text = spInputPageNumberTitle[0];
-        //    this.AddContentControl(lInputPageNumberTitle);
-        //}
-
-        //{
-        //    this.tbInputPageNumber.Text = (this.options.pageIndex + 1).ToString();
-        //    this.tbInputPageNumber.ReadOnly = !this.Enabled;
-        //    this.tbInputPageNumber.ApplyStyle(this.InputPageNumberTextBoxStyle);
-        //    if (!this.Enabled)
-        //    {
-        //        this.tbInputPageNumber.ApplyStyle(this.InputPageNumberTextBoxDisabledStyle);
-        //    }
-        //    this.AddContentControl(this.tbInputPageNumber);
-        //    this.tbInputPageNumber.Attributes["onblur"] = "PageNavigate_Validate('" + this.tbInputPageNumber.ClientID + "');";
-        //}
-
-        //if (spInputPageNumberTitle.Length > 1 && string.IsNullOrEmpty(spInputPageNumberTitle[1]) == false)
-        //{
-        //    System.Web.UI.WebControls.Literal lInputPageNumberTitle = new System.Web.UI.WebControls.Literal();
-        //    lInputPageNumberTitle.Text = spInputPageNumberTitle[1];
-        //    this.AddContentControl(lInputPageNumberTitle);
-        //}
-
-        //if (string.IsNullOrEmpty(this.InputPageNumberButtonText) == false)
-        //{
-        //    System.Web.UI.WebControls.HyperLink btnGotoInputPageNumberButton = new System.Web.UI.WebControls.HyperLink();
-        //    btnGotoInputPageNumberButton.ID = "GotoInputPageNumberButton";
-        //    btnGotoInputPageNumberButton.Text = this.InputPageNumberButtonText;
-        //    btnGotoInputPageNumberButton.ApplyStyle(this.PageButtonStyle);
-        //    btnGotoInputPageNumberButton.ApplyStyle(this.InputPageNumberButtonStyle);
-        //    this.AddContentControl(btnGotoInputPageNumberButton);
-        //    if (this.Enabled)
-        //    {
-        //        btnGotoInputPageNumberButton.NavigateUrl = "javascript:void(0)";
-        //        if (this.EnableURLPage)
-        //        {
-        //            //btnGotoInputPageNumberButton.NavigateUrl = "javascript:PageNavigate_GotoPage('" + Thinksea.Web.ConvertToJavaScriptString(this.PageIndexParameter) + "', '" + this.tbInputPageNumber.ClientID + "');";
-        //            btnGotoInputPageNumberButton.Attributes["onclick"] = "PageNavigate_GotoPage('" + Thinksea.Web.ConvertToJavaScriptString(this.PageIndexParameter) + "', '" + this.tbInputPageNumber.ClientID + "');";
-        //        }
-        //        else
-        //        {
-        //            //btnGotoInputPageNumberButton.NavigateUrl = "javascript:" + this.Page.ClientScript.GetPostBackEventReference(this, "GotoInputPageNumber");
-        //            btnGotoInputPageNumberButton.Attributes["onclick"] = "if(PageNavigate_Validate('" + this.tbInputPageNumber.ClientID + "')){" + this.Page.ClientScript.GetPostBackEventReference(this, "GotoInputPageNumber") + ";}";
-        //        }
-        //        this.tbInputPageNumber.Attributes["onkeydown"] = @"if(event.keyCode==13){var btn=document.getElementById('" + btnGotoInputPageNumberButton.ClientID + @"'); if(document.all){btn.click();} else if(document.createEvent){var ev = document.createEvent('HTMLEvents'); ev.initEvent('click', false, true); btn.dispatchEvent(ev);}return false;}";
-        //    }
-        //    else
-        //    {
-        //        this.SetButtonDisabled(btnGotoInputPageNumberButton);
-        //        btnGotoInputPageNumberButton.ApplyStyle(this.InputPageNumberButtonDisabledStyle);
-        //    }
-        //}
-        //else
-        //{
-        //    if (this.Enabled)
-        //    {
-        //        if (this.EnableURLPage)
-        //        {
-        //            this.tbInputPageNumber.Attributes["onkeydown"] = @"if(event.keyCode==13){PageNavigate_GotoPage('" + Thinksea.Web.ConvertToJavaScriptString(this.PageIndexParameter) + "', '" + this.tbInputPageNumber.ClientID + "'); return false;}";
-        //        }
-        //        else
-        //        {
-        //            this.tbInputPageNumber.Attributes["onkeydown"] = @"if(event.keyCode==13){if(PageNavigate_Validate('" + this.tbInputPageNumber.ClientID + "')){" + this.Page.ClientScript.GetPostBackEventReference(this, "GotoInputPageNumber") + ";} return false;}";
-        //        }
-        //    }
-        //}
-        //}
-        //else
-        //{
-        //    this.tbInputPageNumber.Visible = false;
-        //}
-        //            #endregion
-
-        obj = $(obj);
         obj.children().remove();
         obj.append(lis);
     }
 
-    //引发分页更改事件。
-    this.doPageChanged = function (pageIndex, pageSize) {
-        if (this.options.pageChanged) {
+    // 获取或设置分页索引。
+    this.pageIndex = function (newPageIndex) {
+        if (newPageIndex === undefined) {
+            return this.options.pageIndex;
+        }
+        else {
             $.extend(true, this.options, {
-                pageIndex: pageIndex,
-                pageSize: pageSize,
+                pageIndex: newPageIndex,
             });
             this.render();
-            this.options.pageChanged(pageIndex, pageSize);
+            if (this.options.pageChanged) {
+                this.options.pageChanged(newPageIndex, this.options.pageSize);
+            }
         }
     }
 
-    $.extend(true, this.options, option)
+    // 初始化。
+    this.init = function () {
+        //obj = $(obj);
+        //#region 根据 HTML 标签上的 data- 属性初始化参数。
+        if (obj.data("total") !== undefined)
+            this.options.total = parseInt(obj.data("total"));
+        if (obj.data("pageindex") !== undefined)
+            this.options.pageIndex = parseInt(obj.data("pageindex"));
+        if (obj.data("pagesize") !== undefined)
+            this.options.pageSize = parseInt(obj.data("pagesize"));
+        if (obj.data("pagegroupsize") !== undefined)
+            this.options.pageGroupSize = parseInt(obj.data("pagegroupsize"));
+        if (obj.data("leftformatestring") !== undefined)
+            this.options.leftFormateString = obj.data("leftformatestring");
+        if (obj.data("rightformatestring") !== undefined)
+            this.options.rightFormateString = obj.data("rightformatestring");
+        if (obj.data("pagenumberformatestring") !== undefined)
+            this.options.pageNumberFormateString = obj.data("pagenumberformatestring");
+        if (obj.data("prevpagetext") !== undefined)
+            this.options.prevPageText = obj.data("prevpagetext");
+        if (obj.data("nextpagetext") !== undefined)
+            this.options.nextPageText = obj.data("nextpagetext");
+        if (obj.data("prevgrouppagetext") !== undefined)
+            this.options.prevGroupPageText = obj.data("prevgrouppagetext");
+        if (obj.data("nextgrouppagetext") !== undefined)
+            this.options.nextGroupPageText = obj.data("nextgrouppagetext");
+        if (obj.data("firstpagetext") !== undefined)
+            this.options.firstPageText = obj.data("firstpagetext");
+        if (obj.data("lastpagetext") !== undefined)
+            this.options.lastPageText = obj.data("lastpagetext");
+
+        if (obj.data("showgotoinput") !== undefined) {
+            var attrShowGotoInput = obj.data("showgotoinput");
+            this.options.showGotoInput = (attrShowGotoInput === true || attrShowGotoInput == "true" || attrShowGotoInput == "True");
+        }
+        if (obj.data("gotoinputplaceholder") !== undefined)
+            this.options.gotoInputPlaceholder = obj.data("gotoinputplaceholder");
+        if (obj.data("entertimeout") !== undefined)
+            this.options.enterTimeout = parseInt(obj.data("entertimeout"));
+        if (obj.data("pagechanged") !== undefined) {
+            var attrPageChanged = obj.data("pagechanged");
+            if (typeof (attrPageChanged) == "function") {
+                this.options.pageChanged = attrPageChanged;
+            }
+            else if (attrPageChanged.trim().substr(0, 8) == "function") {
+                this.options.pageChanged = function (pageIndex, pageSize) {
+                    eval("var fn = " + attrPageChanged);
+                    fn(pageIndex, pageSize);
+                };
+            }
+            else {
+                this.options.pageChanged = function (pageIndex, pageSize) {
+                    eval(attrPageChanged);
+                };
+            }
+        }
+        //#endregion
+
+        if (option !== undefined) {
+            $.extend(true, this.options, option); //合并由用户代码设置的参数
+        }
+    }
+
+    this.init();
     this.render();
     return this;
 }

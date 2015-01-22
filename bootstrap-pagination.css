@@ -1,0 +1,5 @@
+﻿/*定义页码输入元素的样式*/
+.pagination .gotoInput {
+    float: left;
+    width: 50px;
+}
