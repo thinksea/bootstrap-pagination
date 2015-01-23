@@ -61,12 +61,12 @@ var BootstrapPagination = function (obj, option) {
         }
 
         // 获取分页总数。
-        this.getPageCount = function () {
+        this.pageCount = function () {
             return Math.floor((this.options.total + this.options.pageSize - 1) / this.options.pageSize);
         }
 
         // 获取当前页实际显示的记录数量。
-        this.getCurrentRecordsCount = function () {
+        this.currentRecordsCount = function () {
             var rCount = this.options.total - this.options.pageSize * this.options.pageIndex;
             if (rCount > this.options.pageSize) {
                 return this.options.pageSize;
@@ -102,10 +102,10 @@ var BootstrapPagination = function (obj, option) {
 
         // 执行格式化字符串。
         this.doFormateString = function (formateString) {
-            return formateString.replace("{count}", this.getCurrentRecordsCount())
+            return formateString.replace("{count}", this.currentRecordsCount())
                     .replace("{total}", this.options.total)
                     .replace("{pageNumber}", this.options.total > 0 ? this.options.pageIndex + 1 : 0)
-                    .replace("{pageCount}", this.getPageCount());
+                    .replace("{pageCount}", this.pageCount());
         }
 
         // 创建页码输入框。
@@ -138,8 +138,8 @@ var BootstrapPagination = function (obj, option) {
             }
             ctl.parent().removeClass("has-error");
             var pageNum = parseInt(sNum) - 1;
-            if (pageNum > (this.getPageCount() - 1)) {
-                pageNum = this.getPageCount() - 1;
+            if (pageNum > (this.pageCount() - 1)) {
+                pageNum = this.pageCount() - 1;
             }
             if (pageNum < 0) {
                 pageNum = 0;
@@ -199,13 +199,13 @@ var BootstrapPagination = function (obj, option) {
             //#region 页索引
             if (this.options.pageNumberFormateString) {
                 var pageNum = this.options.pageIndex - Math.floor((this.options.pageGroupSize - 1) / 2); //分页页码。
-                if (pageNum + this.options.pageGroupSize > this.getPageCount() - 1) {
-                    pageNum = this.getPageCount() - this.options.pageGroupSize;
+                if (pageNum + this.options.pageGroupSize > this.pageCount() - 1) {
+                    pageNum = this.pageCount() - this.options.pageGroupSize;
                 }
                 if (pageNum < 0) {
                     pageNum = 0;
                 }
-                for (var i = 0; i < this.options.pageGroupSize && pageNum < this.getPageCount() ; i++) {
+                for (var i = 0; i < this.options.pageGroupSize && pageNum < this.pageCount() ; i++) {
                     lis[lis.length] = this.createPageButton(pageNum + 1, pageNum);
                     pageNum++;
                 }
@@ -214,7 +214,7 @@ var BootstrapPagination = function (obj, option) {
 
             //#region 下一页按钮
             if (this.options.nextPageText) {
-                if (this.options.pageIndex < this.getPageCount() - 1) {
+                if (this.options.pageIndex < this.pageCount() - 1) {
                     var pageNum = this.options.pageIndex + 1;
                     lis[lis.length] = this.createPageButton(this.options.nextPageText, pageNum);
                 }
@@ -226,8 +226,8 @@ var BootstrapPagination = function (obj, option) {
 
             //#region 下一组分页按钮
             if (this.options.nextGroupPageText) {
-                if (this.options.pageIndex < this.getPageCount() - 1) {
-                    var pageNum = (this.options.pageIndex + this.options.pageGroupSize > this.getPageCount() - 1) ? this.getPageCount() - 1 : this.options.pageIndex + this.options.pageGroupSize;
+                if (this.options.pageIndex < this.pageCount() - 1) {
+                    var pageNum = (this.options.pageIndex + this.options.pageGroupSize > this.pageCount() - 1) ? this.pageCount() - 1 : this.options.pageIndex + this.options.pageGroupSize;
                     lis[lis.length] = this.createPageButton(this.options.nextGroupPageText, pageNum);
                 }
                 else {
@@ -238,8 +238,8 @@ var BootstrapPagination = function (obj, option) {
 
             //#region 尾页按钮
             if (this.options.lastPageText) {
-                if (this.options.pageIndex < this.getPageCount() - 1) {
-                    var pageNum = this.getPageCount() - 1;
+                if (this.options.pageIndex < this.pageCount() - 1) {
+                    var pageNum = this.pageCount() - 1;
                     lis[lis.length] = this.createPageButton(this.options.lastPageText, pageNum);
                 }
                 else {
