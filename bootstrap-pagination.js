@@ -2,7 +2,7 @@
 
 /*
 定义一个 javascript 分页插件，基于 bootstrap 样式。
-version：0.4.0
+version：0.5.0
 last change：2015-1-23
 */
 var BootstrapPagination = function (obj, option) {
@@ -34,14 +34,14 @@ var BootstrapPagination = function (obj, option) {
             firstPageText: "首页",
             //尾页导航按钮文本。
             lastPageText: "尾页",
-            //指示是否显示页码输入框。
-            showGotoInput: false,
             //设置页码输入框中显示的提示文本。
             gotoInputPlaceholder: "GO",
             //接受用户输入内容的延迟时间。单位：毫秒
             enterTimeout: 800,
             //当分页更改后引发此事件。
             pageChanged: function (pageIndex, pageSize) { },
+            //布局方案。指示按照什么样的排列顺序显示哪些元素。
+            layoutScheme: "left,firstpage,prevgrouppage,prevpage,pagenumber,nextpage,nextgrouppage,lastpage,gotoinput,right",
         };
 
         // 获取或设置分页索引。
@@ -153,112 +153,126 @@ var BootstrapPagination = function (obj, option) {
 
         // 呈现控件。
         this.render = function () {
-            var lis = [];
-            //#region 处理左侧输出信息格式化字符串
-            if (this.options.leftFormateString) {
-                lis[lis.length] = this.createLabel(this.doFormateString(this.options.leftFormateString));
-            }
-            //#endregion
+            var lis = new Array();
 
-            //#region 首页按钮
-            if (this.options.firstPageText) {
-                if (this.options.pageIndex == 0) {
-                    lis[lis.length] = this.createPageButton(this.options.firstPageText);
-                }
-                else {
-                    var pageNum = 0;
-                    lis[lis.length] = this.createPageButton(this.options.firstPageText, pageNum);
+            var layoutItems = this.options.layoutScheme.split(",");
+            for (var i_layout = 0; i_layout < layoutItems.length; i_layout++) {
+                switch (layoutItems[i_layout]) {
+                    case "left":
+                        //#region 处理左侧输出信息格式化字符串
+                        if (this.options.leftFormateString) {
+                            lis[lis.length] = this.createLabel(this.doFormateString(this.options.leftFormateString));
+                        }
+                        //#endregion
+                        break;
+                    case "firstpage":
+                        //#region 首页按钮
+                        if (this.options.firstPageText) {
+                            if (this.options.pageIndex == 0) {
+                                lis[lis.length] = this.createPageButton(this.options.firstPageText);
+                            }
+                            else {
+                                var pageNum = 0;
+                                lis[lis.length] = this.createPageButton(this.options.firstPageText, pageNum);
+                            }
+                        }
+                        //#endregion
+                        break;
+                    case "prevgrouppage":
+                        //#region 上一组分页按钮
+                        if (this.options.prevGroupPageText) {
+                            if (this.options.pageIndex == 0) {
+                                lis[lis.length] = this.createPageButton(this.options.prevGroupPageText);
+                            }
+                            else {
+                                var pageNum = (this.options.pageIndex - this.options.pageGroupSize < 0) ? 0 : this.options.pageIndex - this.options.pageGroupSize;
+                                lis[lis.length] = this.createPageButton(this.options.prevGroupPageText, pageNum);
+                            }
+                        }
+                        //#endregion
+                        break;
+                    case "prevpage":
+                        //#region 上一页按钮
+                        if (this.options.prevPageText) {
+                            if (this.options.pageIndex <= 0) {
+                                lis[lis.length] = this.createPageButton(this.options.prevPageText);
+                            }
+                            else {
+                                var pageNum = this.options.pageIndex - 1;
+                                lis[lis.length] = this.createPageButton(this.options.prevPageText, pageNum);
+                            }
+                        }
+                        //#endregion
+                        break;
+                    case "pagenumber":
+                        //#region 页索引
+                        if (this.options.pageNumberFormateString) {
+                            var pageNum = this.options.pageIndex - Math.floor((this.options.pageGroupSize - 1) / 2); //分页页码。
+                            if (pageNum + this.options.pageGroupSize > this.pageCount() - 1) {
+                                pageNum = this.pageCount() - this.options.pageGroupSize;
+                            }
+                            if (pageNum < 0) {
+                                pageNum = 0;
+                            }
+                            for (var i = 0; i < this.options.pageGroupSize && pageNum < this.pageCount() ; i++) {
+                                lis[lis.length] = this.createPageButton(pageNum + 1, pageNum);
+                                pageNum++;
+                            }
+                        }
+                        //#endregion
+                        break;
+                    case "nextpage":
+                        //#region 下一页按钮
+                        if (this.options.nextPageText) {
+                            if (this.options.pageIndex < this.pageCount() - 1) {
+                                var pageNum = this.options.pageIndex + 1;
+                                lis[lis.length] = this.createPageButton(this.options.nextPageText, pageNum);
+                            }
+                            else {
+                                lis[lis.length] = this.createPageButton(this.options.nextPageText);
+                            }
+                        }
+                        //#endregion
+                        break;
+                    case "nextgrouppage":
+                        //#region 下一组分页按钮
+                        if (this.options.nextGroupPageText) {
+                            if (this.options.pageIndex < this.pageCount() - 1) {
+                                var pageNum = (this.options.pageIndex + this.options.pageGroupSize > this.pageCount() - 1) ? this.pageCount() - 1 : this.options.pageIndex + this.options.pageGroupSize;
+                                lis[lis.length] = this.createPageButton(this.options.nextGroupPageText, pageNum);
+                            }
+                            else {
+                                lis[lis.length] = this.createPageButton(this.options.nextGroupPageText);
+                            }
+                        }
+                        //#endregion
+                        break;
+                    case "lastpage":
+                        //#region 尾页按钮
+                        if (this.options.lastPageText) {
+                            if (this.options.pageIndex < this.pageCount() - 1) {
+                                var pageNum = this.pageCount() - 1;
+                                lis[lis.length] = this.createPageButton(this.options.lastPageText, pageNum);
+                            }
+                            else {
+                                lis[lis.length] = this.createPageButton(this.options.lastPageText);
+                            }
+                        }
+                        //#endregion
+                        break;
+                    case "gotoinput":
+                        //#region 处理页码输入框
+                        lis[lis.length] = this.createGoto();
+                        //#endregion
+                        break;
+                    case "right":
+                        //#region 处理右侧输出信息格式化字符串
+                        if (this.options.rightFormateString) {
+                            lis[lis.length] = this.createLabel(this.doFormateString(this.options.rightFormateString));
+                        }
+                        //#endregion
                 }
             }
-            //#endregion
-
-            //#region 上一组分页按钮
-            if (this.options.prevGroupPageText) {
-                if (this.options.pageIndex == 0) {
-                    lis[lis.length] = this.createPageButton(this.options.prevGroupPageText);
-                }
-                else {
-                    var pageNum = (this.options.pageIndex - this.options.pageGroupSize < 0) ? 0 : this.options.pageIndex - this.options.pageGroupSize;
-                    lis[lis.length] = this.createPageButton(this.options.prevGroupPageText, pageNum);
-                }
-            }
-            //#endregion
-
-            //#region 上一页按钮
-            if (this.options.prevPageText) {
-                if (this.options.pageIndex <= 0) {
-                    lis[lis.length] = this.createPageButton(this.options.prevPageText);
-                }
-                else {
-                    var pageNum = this.options.pageIndex - 1;
-                    lis[lis.length] = this.createPageButton(this.options.prevPageText, pageNum);
-                }
-            }
-            //#endregion
-
-            //#region 页索引
-            if (this.options.pageNumberFormateString) {
-                var pageNum = this.options.pageIndex - Math.floor((this.options.pageGroupSize - 1) / 2); //分页页码。
-                if (pageNum + this.options.pageGroupSize > this.pageCount() - 1) {
-                    pageNum = this.pageCount() - this.options.pageGroupSize;
-                }
-                if (pageNum < 0) {
-                    pageNum = 0;
-                }
-                for (var i = 0; i < this.options.pageGroupSize && pageNum < this.pageCount() ; i++) {
-                    lis[lis.length] = this.createPageButton(pageNum + 1, pageNum);
-                    pageNum++;
-                }
-            }
-            //#endregion
-
-            //#region 下一页按钮
-            if (this.options.nextPageText) {
-                if (this.options.pageIndex < this.pageCount() - 1) {
-                    var pageNum = this.options.pageIndex + 1;
-                    lis[lis.length] = this.createPageButton(this.options.nextPageText, pageNum);
-                }
-                else {
-                    lis[lis.length] = this.createPageButton(this.options.nextPageText);
-                }
-            }
-            //#endregion
-
-            //#region 下一组分页按钮
-            if (this.options.nextGroupPageText) {
-                if (this.options.pageIndex < this.pageCount() - 1) {
-                    var pageNum = (this.options.pageIndex + this.options.pageGroupSize > this.pageCount() - 1) ? this.pageCount() - 1 : this.options.pageIndex + this.options.pageGroupSize;
-                    lis[lis.length] = this.createPageButton(this.options.nextGroupPageText, pageNum);
-                }
-                else {
-                    lis[lis.length] = this.createPageButton(this.options.nextGroupPageText);
-                }
-            }
-            //#endregion
-
-            //#region 尾页按钮
-            if (this.options.lastPageText) {
-                if (this.options.pageIndex < this.pageCount() - 1) {
-                    var pageNum = this.pageCount() - 1;
-                    lis[lis.length] = this.createPageButton(this.options.lastPageText, pageNum);
-                }
-                else {
-                    lis[lis.length] = this.createPageButton(this.options.lastPageText);
-                }
-            }
-            //#endregion
-
-            //#region 处理页码输入框
-            if (this.options.showGotoInput) {
-                lis[lis.length] = this.createGoto();
-            }
-            //#endregion
-
-            //#region 处理右侧输出信息格式化字符串
-            if (this.options.rightFormateString) {
-                lis[lis.length] = this.createLabel(this.doFormateString(this.options.rightFormateString));
-            }
-            //#endregion
 
             obj.children().remove();
             obj.append(lis);
@@ -295,10 +309,10 @@ var BootstrapPagination = function (obj, option) {
             if (obj.data("lastpagetext") !== undefined)
                 this.options.lastPageText = obj.data("lastpagetext");
 
-            if (obj.data("showgotoinput") !== undefined) {
-                var attrShowGotoInput = obj.data("showgotoinput");
-                this.options.showGotoInput = (attrShowGotoInput === true || attrShowGotoInput == "true" || attrShowGotoInput == "True");
-            }
+            //if (obj.data("showgotoinput") !== undefined) {
+            //    var attrShowGotoInput = obj.data("showgotoinput");
+            //    this.options.showGotoInput = (attrShowGotoInput === true || attrShowGotoInput == "true" || attrShowGotoInput == "True");
+            //}
             if (obj.data("gotoinputplaceholder") !== undefined)
                 this.options.gotoInputPlaceholder = obj.data("gotoinputplaceholder");
             if (obj.data("entertimeout") !== undefined)
@@ -320,6 +334,8 @@ var BootstrapPagination = function (obj, option) {
                     };
                 }
             }
+            if (obj.data("layoutscheme") !== undefined)
+                this.options.layoutScheme = obj.data("layoutscheme");
             //#endregion
 
             if (option !== undefined) {

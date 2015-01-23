@@ -11,6 +11,7 @@
     <script type="text/javascript">
         $(function () {
             var demo1 = BootstrapPagination($("#demo1"), {
+                layoutScheme: "left,firstpage,prevgrouppage,prevpage,pagenumber,nextpage,nextgrouppage,lastpage,gotoinput,right",
                 //记录总数。
                 total: 101,
                 //指示每页最多显示的记录数量。
@@ -37,8 +38,6 @@
                 firstPageText: "首页",
                 //尾页导航按钮文本。
                 lastPageText: "尾页",
-                //指示是否显示页码输入框。
-                showGotoInput: true,
                 //设置页码输入框中显示的提示文本。
                 gotoInputPlaceholder: "GO",
                 //接受用户输入内容的延迟时间。单位：毫秒
@@ -62,18 +61,19 @@
     <h1>Demo2：通过HTML元素属性设置参数</h1>
     <nav>
         <ul class="pagination demo2" data-total="101" data-pageindex="1" data-pagesize="20" data-pagegroupsize="5" data-leftformatestring="本页{count}条记录/共{total}条记录" data-rightformatestring="第{pageNumber}页/共{pageCount}页" data-pagenumberformatestring="{pageNumber}" data-prevpagetext="上一页" data-nextpagetext="下一页" data-prevgrouppagetext="上一组" data-nextgrouppagetext="下一组" data-firstpagetext="首页" data-lastpagetext="尾页" data-showgotoinput="true" data-gotoinputplaceholder="GO" data-entertimeout="800"
-            data-pagechanged='function (pageIndex, pageSize) {alert("page changed. pageIndex:" + pageIndex + ",pageSize:" + pageSize);};'>
+            data-pagechanged='function (pageIndex, pageSize) {alert("page changed. pageIndex:" + pageIndex + ",pageSize:" + pageSize);};'
+            data-layoutscheme="left,firstpage,prevgrouppage,prevpage,pagenumber,nextpage,nextgrouppage,lastpage,gotoinput,right">
         </ul>
     </nav>
     <h1>Demo3：具有联动效果的应用示例</h1>
     <nav>
         <ul class="pagination demo3" data-total="101" data-pageindex="1" data-pagesize="20" data-pagegroupsize="5" data-leftformatestring="本页{count}条记录/共{total}条记录" data-rightformatestring="第{pageNumber}页/共{pageCount}页" data-pagenumberformatestring="{pageNumber}" data-prevpagetext="上一页" data-nextpagetext="下一页" data-prevgrouppagetext="上一组" data-nextgrouppagetext="下一组" data-firstpagetext="首页" data-lastpagetext="尾页" data-showgotoinput="true" data-gotoinputplaceholder="GO" data-entertimeout="800"
-            data-pagechanged='function (pageIndex, pageSize) {alert("page changed. pageIndex:" + pageIndex + ",pageSize:" + pageSize);};'>
+            data-pagechanged='function (pageIndex, pageSize) {alert("page changed. pageIndex:" + pageIndex + ",pageSize:" + pageSize);};'
+            data-layoutscheme="left,firstpage,prevgrouppage,prevpage,pagenumber,nextpage,nextgrouppage,lastpage,gotoinput,right">
         </ul>
     </nav>
     <nav>
-        <ul class="pagination demo3" data-total="101" data-pageindex="1" data-pagesize="20" data-pagegroupsize="5" data-leftformatestring="本页{count}条记录/共{total}条记录" data-rightformatestring="第{pageNumber}页/共{pageCount}页" data-pagenumberformatestring="{pageNumber}" data-prevpagetext="上一页" data-nextpagetext="下一页" data-prevgrouppagetext="上一组" data-nextgrouppagetext="下一组" data-firstpagetext="首页" data-lastpagetext="尾页" data-showgotoinput="true" data-gotoinputplaceholder="GO" data-entertimeout="800"
-            data-pagechanged='function (pageIndex, pageSize) {alert("page changed. pageIndex:" + pageIndex + ",pageSize:" + pageSize);};'>
+        <ul class="pagination demo3">
         </ul>
     </nav>
 </body>
