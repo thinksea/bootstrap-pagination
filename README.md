@@ -1,11 +1,13 @@
 # bootstrap-pagination
 一个 javascript 分页插件，基于 bootstrap 样式。
 
+---
+
 ![demo.png](images/demo.png)
 
 ---
 
-version：0.4.0
+#### version：0.4.0
 
 + 1、支持通过程序代码设置参数。
 + 2、支持通过HTML元素属性设置参数。
