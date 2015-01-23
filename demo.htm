@@ -10,8 +10,7 @@
     <script type="text/javascript" charset="utf-8" src="bootstrap-pagination.min.js"></script>
     <script type="text/javascript">
         $(function () {
-            var d1 = BootstrapPagination($(".bootstrap-pagination"));
-            var d2 = BootstrapPagination($("#demo2"), {
+            var demo1 = BootstrapPagination($("#demo1"), {
                 //记录总数。
                 total: 101,
                 //指示每页最多显示的记录数量。
@@ -49,19 +48,32 @@
                     alert("page changed. pageIndex:" + pageIndex + ",pageSize:" + pageSize)
                 },
             });
+            var demo2 = BootstrapPagination($(".demo2"));
+            var demo3 = BootstrapPagination($(".demo3"));
         });
     </script>
 </head>
 <body>
-    <h1>Demo1</h1>
+    <h1>Demo1：通过程序代码设置参数</h1>
     <nav>
-        <ul class="pagination bootstrap-pagination" data-total="101" data-pageindex="1" data-pagesize="20" data-pagegroupsize="5" data-leftformatestring="本页{count}条记录/共{total}条记录" data-rightformatestring="第{pageNumber}页/共{pageCount}页" data-pagenumberformatestring="{pageNumber}" data-prevpagetext="上一页" data-nextpagetext="下一页" data-prevgrouppagetext="上一组" data-nextgrouppagetext="下一组" data-firstpagetext="首页" data-lastpagetext="尾页" data-showgotoinput="true" data-gotoinputplaceholder="GO" data-entertimeout="800"
+        <ul id="demo1" class="pagination">
+        </ul>
+    </nav>
+    <h1>Demo2：通过HTML元素属性设置参数</h1>
+    <nav>
+        <ul class="pagination demo2" data-total="101" data-pageindex="1" data-pagesize="20" data-pagegroupsize="5" data-leftformatestring="本页{count}条记录/共{total}条记录" data-rightformatestring="第{pageNumber}页/共{pageCount}页" data-pagenumberformatestring="{pageNumber}" data-prevpagetext="上一页" data-nextpagetext="下一页" data-prevgrouppagetext="上一组" data-nextgrouppagetext="下一组" data-firstpagetext="首页" data-lastpagetext="尾页" data-showgotoinput="true" data-gotoinputplaceholder="GO" data-entertimeout="800"
             data-pagechanged='function (pageIndex, pageSize) {alert("page changed. pageIndex:" + pageIndex + ",pageSize:" + pageSize);};'>
         </ul>
     </nav>
-    <h1>Demo2</h1>
+    <h1>Demo3：具有联动效果的应用示例</h1>
     <nav>
-        <ul id="demo2" class="pagination">
+        <ul class="pagination demo3" data-total="101" data-pageindex="1" data-pagesize="20" data-pagegroupsize="5" data-leftformatestring="本页{count}条记录/共{total}条记录" data-rightformatestring="第{pageNumber}页/共{pageCount}页" data-pagenumberformatestring="{pageNumber}" data-prevpagetext="上一页" data-nextpagetext="下一页" data-prevgrouppagetext="上一组" data-nextgrouppagetext="下一组" data-firstpagetext="首页" data-lastpagetext="尾页" data-showgotoinput="true" data-gotoinputplaceholder="GO" data-entertimeout="800"
+            data-pagechanged='function (pageIndex, pageSize) {alert("page changed. pageIndex:" + pageIndex + ",pageSize:" + pageSize);};'>
+        </ul>
+    </nav>
+    <nav>
+        <ul class="pagination demo3" data-total="101" data-pageindex="1" data-pagesize="20" data-pagegroupsize="5" data-leftformatestring="本页{count}条记录/共{total}条记录" data-rightformatestring="第{pageNumber}页/共{pageCount}页" data-pagenumberformatestring="{pageNumber}" data-prevpagetext="上一页" data-nextpagetext="下一页" data-prevgrouppagetext="上一组" data-nextgrouppagetext="下一组" data-firstpagetext="首页" data-lastpagetext="尾页" data-showgotoinput="true" data-gotoinputplaceholder="GO" data-entertimeout="800"
+            data-pagechanged='function (pageIndex, pageSize) {alert("page changed. pageIndex:" + pageIndex + ",pageSize:" + pageSize);};'>
         </ul>
     </nav>
 </body>
