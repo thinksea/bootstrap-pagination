@@ -11,7 +11,7 @@
     <script type="text/javascript">
         $(function () {
             var demo1 = BootstrapPagination($("#demo1"), {
-                layoutScheme: "left,firstpage,prevgrouppage,prevpage,pagenumber,nextpage,nextgrouppage,lastpage,gotoinput,right",
+                layoutScheme: "lefttext,firstpage,prevgrouppage,prevpage,pagenumber,nextpage,nextgrouppage,lastpage,gotoinput,righttext",
                 //记录总数。
                 total: 101,
                 //指示每页最多显示的记录数量。
@@ -62,14 +62,14 @@
     <nav>
         <ul class="pagination demo2" data-total="101" data-pageindex="1" data-pagesize="20" data-pagegroupsize="5" data-leftformatestring="本页{count}条记录/共{total}条记录" data-rightformatestring="第{pageNumber}页/共{pageCount}页" data-pagenumberformatestring="{pageNumber}" data-prevpagetext="上一页" data-nextpagetext="下一页" data-prevgrouppagetext="上一组" data-nextgrouppagetext="下一组" data-firstpagetext="首页" data-lastpagetext="尾页" data-showgotoinput="true" data-gotoinputplaceholder="GO" data-entertimeout="800"
             data-pagechanged='function (pageIndex, pageSize) {alert("page changed. pageIndex:" + pageIndex + ",pageSize:" + pageSize);};'
-            data-layoutscheme="left,firstpage,prevgrouppage,prevpage,pagenumber,nextpage,nextgrouppage,lastpage,gotoinput,right">
+            data-layoutscheme="lefttext,firstpage,prevgrouppage,prevpage,pagenumber,nextpage,nextgrouppage,lastpage,gotoinput,righttext">
         </ul>
     </nav>
     <h1>Demo3：具有联动效果的应用示例</h1>
     <nav>
         <ul class="pagination demo3" data-total="101" data-pageindex="1" data-pagesize="20" data-pagegroupsize="5" data-leftformatestring="本页{count}条记录/共{total}条记录" data-rightformatestring="第{pageNumber}页/共{pageCount}页" data-pagenumberformatestring="{pageNumber}" data-prevpagetext="上一页" data-nextpagetext="下一页" data-prevgrouppagetext="上一组" data-nextgrouppagetext="下一组" data-firstpagetext="首页" data-lastpagetext="尾页" data-showgotoinput="true" data-gotoinputplaceholder="GO" data-entertimeout="800"
             data-pagechanged='function (pageIndex, pageSize) {alert("page changed. pageIndex:" + pageIndex + ",pageSize:" + pageSize);};'
-            data-layoutscheme="left,firstpage,prevgrouppage,prevpage,pagenumber,nextpage,nextgrouppage,lastpage,gotoinput,right">
+            data-layoutscheme="lefttext,firstpage,prevgrouppage,prevpage,pagenumber,nextpage,nextgrouppage,lastpage,gotoinput,righttext">
         </ul>
     </nav>
     <nav>

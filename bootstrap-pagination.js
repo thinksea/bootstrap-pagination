@@ -2,8 +2,8 @@
 
 /*
 定义一个 javascript 分页插件，基于 bootstrap 样式。
-version：0.5.0
-last change：2015-1-23
+version：0.5.1
+last change：2015-1-24
 */
 var BootstrapPagination = function (obj, option) {
     var innerBootstrapPagination = function (obj, option) {
@@ -41,7 +41,7 @@ var BootstrapPagination = function (obj, option) {
             //当分页更改后引发此事件。
             pageChanged: function (pageIndex, pageSize) { },
             //布局方案。指示按照什么样的排列顺序显示哪些元素。
-            layoutScheme: "left,firstpage,prevgrouppage,prevpage,pagenumber,nextpage,nextgrouppage,lastpage,gotoinput,right",
+            layoutScheme: "lefttext,firstpage,prevgrouppage,prevpage,pagenumber,nextpage,nextgrouppage,lastpage,gotoinput,righttext",
         };
 
         // 获取或设置分页索引。
@@ -158,7 +158,7 @@ var BootstrapPagination = function (obj, option) {
             var layoutItems = this.options.layoutScheme.split(",");
             for (var i_layout = 0; i_layout < layoutItems.length; i_layout++) {
                 switch (layoutItems[i_layout]) {
-                    case "left":
+                    case "lefttext":
                         //#region 处理左侧输出信息格式化字符串
                         if (this.options.leftFormateString) {
                             lis[lis.length] = this.createLabel(this.doFormateString(this.options.leftFormateString));
@@ -265,7 +265,7 @@ var BootstrapPagination = function (obj, option) {
                         lis[lis.length] = this.createGoto();
                         //#endregion
                         break;
-                    case "right":
+                    case "righttext":
                         //#region 处理右侧输出信息格式化字符串
                         if (this.options.rightFormateString) {
                             lis[lis.length] = this.createLabel(this.doFormateString(this.options.rightFormateString));
