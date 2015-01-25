@@ -1,12 +1,13 @@
 ﻿/// <reference path="Scripts/jquery-1.11.0.min.js" />
 
 /*
-定义一个 javascript 分页插件，基于 bootstrap 样式。
+定义一个 javascript 分页控件，基于 bootstrap 样式。
 version：0.6.0
 last change：2015-1-25
 */
 var BootstrapPagination = function (obj, option) {
     var innerBootstrapPagination = function (obj, option) {
+        // 参数设置。
         this.options = {
             //记录总数。
             total: 0,
@@ -180,6 +181,7 @@ var BootstrapPagination = function (obj, option) {
             return li;
         }
 
+        // 延迟计时器ID，这个延迟计时器用于延迟执行用户输入跳转页码的工作。
         this.timeoutId = 0;
         // 处理输入页码事件。
         this.pageInputEvents = function (event) {

@@ -1,5 +1,5 @@
 # bootstrap-pagination
-一个 javascript 分页插件，基于 bootstrap 样式。
+一个 javascript 分页控件，基于 bootstrap 样式。
 
 ![demo.png](images/demo.png)
 
@@ -23,7 +23,9 @@
 
 ---
 
-# 需要在 HTML 中引入的资源
+# 开始使用组件
+
+使用控件的第一步是在你的网页 HTML 代码中添加下面引用，更加详细的代码示例可以参考项目文件“demo.htm”。
 
 ```html
 <script type="text/javascript" charset="utf-8" src="Scripts/jquery-1.11.0.min.js"></script>
