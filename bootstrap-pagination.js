@@ -44,7 +44,7 @@ var BootstrapPagination = function (obj, option) {
             //当分页更改后引发此事件。
             pageChanged: function (pageIndex, pageSize) { },
             //布局方案。指示按照什么样的排列顺序显示哪些元素。
-            layoutScheme: "lefttext,firstpage,prevgrouppage,prevpage,pagenumber,nextpage,nextgrouppage,lastpage,pagesizelist,pageinput,righttext",
+            layoutScheme: "lefttext,pagesizelist,firstpage,prevgrouppage,prevpage,pagenumber,nextpage,nextgrouppage,lastpage,pageinput,righttext",
         };
 
         // 获取或设置分页索引。
