@@ -84,7 +84,7 @@
 <script type="text/javascript">
     $(function () {
         var demo2 = BootstrapPagination($("#demo1"), {
-            layoutScheme: "lefttext,firstpage,prevgrouppage,prevpage,pagenumber,nextpage,nextgrouppage,lastpage,pagesizelist,pageinput,righttext",
+            layoutScheme: "lefttext,pagesizelist,firstpage,prevgrouppage,prevpage,pagenumber,nextpage,nextgrouppage,lastpage,pageinput,righttext",
             //记录总数。
             total: 101,
             //分页尺寸。指示每页最多显示的记录数量。
@@ -142,7 +142,7 @@
         data-pageinput-placeholder="GO" data-pageinput-timeout="800"
         data-pagesizelist="[5, 10, 20, 50, 100, 200]"
         data-pagechanged='function (pageIndex, pageSize) {alert("page changed. pageIndex:" + pageIndex + ",pageSize:" + pageSize);};'
-        data-layoutscheme="lefttext,firstpage,prevgrouppage,prevpage,pagenumber,nextpage,nextgrouppage,lastpage,pagesizelist,pageinput,righttext">
+        data-layoutscheme="lefttext,pagesizelist,firstpage,prevgrouppage,prevpage,pagenumber,nextpage,nextgrouppage,lastpage,pageinput,righttext">
     </ul>
 </nav>
 ```
@@ -173,7 +173,7 @@
         data-pageinput-placeholder="GO" data-pageinput-timeout="800"
         data-pagesizelist="[5, 10, 20, 50, 100, 200]"
         data-pagechanged='function (pageIndex, pageSize) {alert("page changed. pageIndex:" + pageIndex + ",pageSize:" + pageSize);};'
-        data-layoutscheme="lefttext,firstpage,prevgrouppage,prevpage,pagenumber,nextpage,nextgrouppage,lastpage,pagesizelist,pageinput,righttext">
+        data-layoutscheme="lefttext,pagesizelist,firstpage,prevgrouppage,prevpage,pagenumber,nextpage,nextgrouppage,lastpage,pageinput,righttext">
     </ul>
 </nav>
 一般情况这里显示数据列表
