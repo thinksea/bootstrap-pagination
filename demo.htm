@@ -36,6 +36,8 @@
                 rightFormateString: "第{pageNumber}页/共{totalPages}页",
                 //页码文本格式化字符串。
                 pageNumberFormateString: "{pageNumber}",
+                //分页尺寸输出格式化字符串
+                pageSizeListFormateString: "每页显示{pageSize}条记录",
                 //上一页导航按钮文本。
                 prevPageText: "上一页",
                 //下一页导航按钮文本。
@@ -65,6 +67,7 @@
     </script>
 </head>
 <body>
+    <form class="form-inline">
     <h1>Demo1：最简短代码示例</h1>
     <nav>
         <ul id="demo1" class="pagination">
@@ -81,6 +84,7 @@
             data-leftformatestring="本页{count}条记录/共{total}条记录"
             data-rightformatestring="第{pageNumber}页/共{totalPages}页"
             data-pagenumberformatestring="{pageNumber}"
+            data-pagesizelistformatestring="每页显示{pageSize}条记录"
             data-prevpagetext="上一页" data-nextpagetext="下一页"
             data-prevgrouppagetext="上一组" data-nextgrouppagetext="下一组"
             data-firstpagetext="首页" data-lastpagetext="尾页"
@@ -96,6 +100,7 @@
             data-leftformatestring="本页{count}条记录/共{total}条记录"
             data-rightformatestring="第{pageNumber}页/共{totalPages}页"
             data-pagenumberformatestring="{pageNumber}"
+            data-pagesizelistformatestring="每页显示{pageSize}条记录"
             data-prevpagetext="上一页" data-nextpagetext="下一页"
             data-prevgrouppagetext="上一组" data-nextgrouppagetext="下一组"
             data-firstpagetext="首页" data-lastpagetext="尾页"
@@ -109,5 +114,6 @@
         <ul class="pagination demo4">
         </ul>
     </nav>
+        </form>
 </body>
 </html>

@@ -2,8 +2,8 @@
 
 /*
 定义一个 javascript 分页控件，基于 bootstrap 样式。
-version：0.6.0
-last change：2015-1-25
+version：0.6.1
+last change：2015-1-26
 */
 var BootstrapPagination = function (obj, option) {
     var innerBootstrapPagination = function (obj, option) {
@@ -23,6 +23,8 @@ var BootstrapPagination = function (obj, option) {
             rightFormateString: "第{pageNumber}页/共{totalPages}页",
             //页码文本格式化字符串。
             pageNumberFormateString: "{pageNumber}",
+            //分页尺寸输出格式化字符串
+            pageSizeListFormateString: "每页显示{pageSize}条记录",
             //上一页导航按钮文本。
             prevPageText: "上一页",
             //下一页导航按钮文本。
@@ -72,6 +74,7 @@ var BootstrapPagination = function (obj, option) {
             }
             else {
                 this.options.pageSize = newPageSize;
+                this.fixPageIndex();
                 this.render();
                 if (this.options.pageChanged) {
                     this.options.pageChanged(this.options.pageIndex, this.options.pageSize);
@@ -114,7 +117,7 @@ var BootstrapPagination = function (obj, option) {
 
         // 创建文本标签。
         this.createLabel = function (text) {
-            var li = $("<li><span>" + text + "</span></li>");
+            var li = $('<li><span>' + text + '</span></li>');
             li.addClass("disabled");
             return li;
         }
@@ -131,7 +134,9 @@ var BootstrapPagination = function (obj, option) {
         this.createPageSizeList = function (align) {
             var li = $('<li></li>');
             var el1 = $('<div class="input-group dropup" style="float: left;"></div>');
-            var el2 = $('<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true"><span class="pagesize">' + this.options.pageSize + '</span><span class="caret"></span></button>');
+            var el2 = $('<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true">' +
+                this.options.pageSizeListFormateString.replace("{pageSize}", '<span class="pagesize">' + this.options.pageSize + '</span>') +
+                '<span class="caret"></span></button>');
             switch (align) {
                 case 1:
                     el2.removeClass("pagesize-fix-center").removeClass("pagesize-fix-right").addClass("pagesize-fix-left");
@@ -387,6 +392,8 @@ var BootstrapPagination = function (obj, option) {
                 this.options.rightFormateString = obj.data("rightformatestring");
             if (obj.data("pagenumberformatestring") !== undefined)
                 this.options.pageNumberFormateString = obj.data("pagenumberformatestring");
+            if (obj.data("pagesizelistformatestring") !== undefined)
+                this.options.pageSizeListFormateString = obj.data("pagesizelistformatestring");
             if (obj.data("prevpagetext") !== undefined)
                 this.options.prevPageText = obj.data("prevpagetext");
             if (obj.data("nextpagetext") !== undefined)

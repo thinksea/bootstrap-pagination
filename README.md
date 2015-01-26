@@ -5,6 +5,10 @@
 
 ---
 
+###### version：0.6.1
+
++ 1、支持分页尺寸选择框呈现内容格式化。
+
 ###### version：0.6.0
 
 + 1、支持选择分页尺寸。
@@ -99,6 +103,8 @@
             rightFormateString: "第{pageNumber}页/共{totalPages}页",
             //页码文本格式化字符串。
             pageNumberFormateString: "{pageNumber}",
+            //分页尺寸输出格式化字符串
+            pageSizeListFormateString: "每页显示{pageSize}条记录",
             //上一页导航按钮文本。
             prevPageText: "上一页",
             //下一页导航按钮文本。
@@ -136,6 +142,7 @@
         data-leftformatestring="本页{count}条记录/共{total}条记录"
         data-rightformatestring="第{pageNumber}页/共{totalPages}页"
         data-pagenumberformatestring="{pageNumber}"
+        data-pagesizelistformatestring="每页显示{pageSize}条记录"
         data-prevpagetext="上一页" data-nextpagetext="下一页"
         data-prevgrouppagetext="上一组" data-nextgrouppagetext="下一组"
         data-firstpagetext="首页" data-lastpagetext="尾页"
@@ -167,6 +174,7 @@
         data-leftformatestring="本页{count}条记录/共{total}条记录"
         data-rightformatestring="第{pageNumber}页/共{totalPages}页"
         data-pagenumberformatestring="{pageNumber}"
+        data-pagesizelistformatestring="每页显示{pageSize}条记录"
         data-prevpagetext="上一页" data-nextpagetext="下一页"
         data-prevgrouppagetext="上一组" data-nextgrouppagetext="下一组"
         data-firstpagetext="首页" data-lastpagetext="尾页"
@@ -176,7 +184,7 @@
         data-layoutscheme="lefttext,pagesizelist,firstpage,prevgrouppage,prevpage,pagenumber,nextpage,nextgrouppage,lastpage,pageinput,righttext">
     </ul>
 </nav>
-一般情况这里显示数据列表
+一般情况这里显示你的数据列表
 <nav>
     <ul class="pagination demo4">
     </ul>
