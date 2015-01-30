@@ -4,6 +4,7 @@
 定义一个 javascript 分页控件，基于 bootstrap 样式。
 version：0.6.1
 last change：2015-1-26
+projects url:https://github.com/thinksea/bootstrap-pagination
 */
 var BootstrapPagination = function (obj, option) {
     var innerBootstrapPagination = function (obj, option) {
