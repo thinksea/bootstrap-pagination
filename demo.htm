@@ -10,7 +10,7 @@
     <script type="text/javascript" charset="utf-8" src="bootstrap-pagination.min.js"></script>
     <script type="text/javascript">
         $(function () {
-            var demo1 = BootstrapPagination($(".demo1"), {
+            var demo1 = BootstrapPagination($("#demo1"), {
                 //记录总数。
                 total: 101,
                 //当前页索引编号。从其开始（从0开始）的整数。
@@ -20,7 +20,7 @@
                     alert("page changed. pageIndex:" + pageIndex + ",pageSize:" + pageSize)
                 },
             });
-            var demo2 = BootstrapPagination($("#demo1"), {
+            var demo2 = BootstrapPagination($("#demo2"), {
                 layoutScheme: "lefttext,pagesizelist,firstpage,prevgrouppage,prevpage,pagenumber,nextpage,nextgrouppage,lastpage,pageinput,righttext",
                 //记录总数。
                 total: 101,
