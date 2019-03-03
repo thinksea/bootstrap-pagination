@@ -2,8 +2,8 @@
 
 /*
 定义一个 javascript 分页控件，基于 bootstrap 样式。
-version：0.6.2
-last change：2017-3-2
+version：0.6.3
+last change：2019-3-3
 projects url:https://github.com/thinksea/bootstrap-pagination
 */
 var BootstrapPagination = function (obj, option) {
