@@ -2,6 +2,7 @@
 .pagination .page-input {
     float: left;
     width: 50px;
+    margin-left: -1px;
 }
 
 /*#region 修复分页尺寸列表控件样式*/
