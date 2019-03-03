@@ -61,7 +61,7 @@
 ```javascript
 <script type="text/javascript">
     $(function () {
-        var demo1 = BootstrapPagination($(".demo1"), {
+        var demo1 = BootstrapPagination($("#demo1"), {
             //记录总数。
             total: 101,
             //当前页索引编号。从其开始（从0开始）的整数。
