@@ -4,5 +4,11 @@
     "inputFiles": [
       "bootstrap-pagination.js"
     ]
+  },
+  {
+    "outputFileName": "bootstrap-pagination.min.css",
+    "inputFiles": [
+      "bootstrap-pagination.css"
+    ]
   }
 ]
