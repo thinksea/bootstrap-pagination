@@ -4,24 +4,25 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     <title></title>
-    <script type="text/javascript" charset="utf-8" src="Scripts/jquery-1.11.0.min.js"></script>
-    <link type="text/css" href="Scripts/bootstrap-3.3.1/css/bootstrap.min.css" rel="stylesheet" />
-    <script type="text/javascript" charset="utf-8" src="Scripts/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+    <link type="text/css" href="https://cdn.staticfile.org/twitter-bootstrap/5.2.3/css/bootstrap.min.css" rel="stylesheet" />
+    <script type="text/javascript" charset="utf-8" src="https://cdn.staticfile.org/twitter-bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
+    <!--为了支持下拉菜单控件，如果此处引用“bootstrap.min.js”则需要在之前引入：https://cdn.staticfile.org/popper.js/2.11.6/umd/popper.min.js-->
     <link type="text/css" href="bootstrap-pagination.min.css" rel="stylesheet" />
     <script type="text/javascript" charset="utf-8" src="bootstrap-pagination.min.js"></script>
     <script type="text/javascript">
-        $(function () {
-            var demo1 = BootstrapPagination($("#demo1"), {
+        function init() {
+            var demo1 = new BootstrapPagination(document.getElementById("demo1"), {
                 //记录总数。
                 total: 101,
                 //当前页索引编号。从其开始（从0开始）的整数。
                 pageIndex: 2,
                 //当分页更改后引发此事件。
-                pageChanged: function (pageIndex, pageSize) {
-                    alert("page changed. pageIndex:" + pageIndex + ",pageSize:" + pageSize)
+                onPageChanged: function (sender) {
+                    alert("page changed. pageIndex:" + sender.pageIndex + ",pageSize:" + sender.pageSize)
                 },
             });
-            var demo2 = BootstrapPagination($("#demo2"), {
+
+            var demo2 = new BootstrapPagination(document.getElementById("demo2"), {
                 layoutScheme: "lefttext,pagesizelist,firstpage,prevgrouppage,prevpage,pagenumber,nextpage,nextgrouppage,lastpage,pageinput,righttext",
                 //记录总数。
                 total: 101,
@@ -58,63 +59,107 @@
                 //分页尺寸列表。
                 pageSizeList: [5, 10, 20, 50, 100, 200],
                 //当分页更改后引发此事件。
-                pageChanged: function (pageIndex, pageSize) {
-                    alert("page changed. pageIndex:" + pageIndex + ",pageSize:" + pageSize)
+                onPageChanged: function (sender) {
+                    alert("page changed. pageIndex:" + sender.pageIndex + ",pageSize:" + sender.pageSize)
                 },
             });
-            var demo3 = BootstrapPagination($(".demo3"));
-            var demo4 = BootstrapPagination($(".demo4"));
-        });
+
+            var demo3 = new BootstrapPagination(document.querySelector(".demo3"), {
+
+            });
+            var demo4 = new BootstrapPagination(document.querySelector(".demo4"), {
+                //当分页更改后引发此事件。
+                onPageChanged: function (sender) {
+                    demo5.pageIndex = sender.pageIndex;
+                    demo5.pageSize = sender.pageSize;
+                },
+            });
+            var demo5 = new BootstrapPagination(document.querySelector(".demo5"), {
+                pageGroupSize: 5,
+                //当分页更改后引发此事件。
+                onPageChanged: function (sender) {
+                    demo4.pageIndex = sender.pageIndex;
+                    demo4.pageSize = sender.pageSize;
+                },
+            });
+
+            //#region 表单验证和提交。
+            let forms = document.querySelectorAll('.needs-validation'); // 获取要应用自定义验证样式的所有表单
+            for (let i = 0; i < forms.length; i++) {
+                let form = forms[i];
+                form.addEventListener('submit', function (event) {
+                    let form = this;
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        form.classList.add('was-validated');
+                        return false;
+                    }
+
+                    form.classList.add('was-validated');
+                    if (!submitForm()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                }, false);
+            }
+            //#endregion
+        }
     </script>
 </head>
-<body>
-    <form class="form-inline">
-    <h1>Demo1：最简短代码示例</h1>
-    <nav>
-        <ul id="demo1" class="pagination">
-        </ul>
-    </nav>
-    <h1>Demo2：通过程序代码设置参数</h1>
-    <nav>
-        <ul id="demo2" class="pagination">
-        </ul>
-    </nav>
-    <h1>Demo3：通过HTML元素属性设置参数</h1>
-    <nav>
-        <ul class="pagination demo3" data-total="101" data-pageindex="1" data-pagesize="20" data-pagegroupsize="5"
-            data-leftformatestring="本页{count}条记录/共{total}条记录"
-            data-rightformatestring="第{pageNumber}页/共{totalPages}页"
-            data-pagenumberformatestring="{pageNumber}"
-            data-pagesizelistformatestring="每页显示{pageSize}条记录"
-            data-prevpagetext="上一页" data-nextpagetext="下一页"
-            data-prevgrouppagetext="上一组" data-nextgrouppagetext="下一组"
-            data-firstpagetext="首页" data-lastpagetext="尾页"
-            data-pageinput-placeholder="GO" data-pageinput-timeout="800"
-            data-pagesizelist="[5, 10, 20, 50, 100, 200]"
-            data-pagechanged='function (pageIndex, pageSize) {alert("page changed. pageIndex:" + pageIndex + ",pageSize:" + pageSize);};'
-            data-layoutscheme="lefttext,pagesizelist,firstpage,prevgrouppage,prevpage,pagenumber,nextpage,nextgrouppage,lastpage,pageinput,righttext">
-        </ul>
-    </nav>
-    <h1>Demo4：多个控件具有联动效果</h1>
-    <nav>
-        <ul class="pagination demo4" data-total="101" data-pageindex="1" data-pagesize="20" data-pagegroupsize="5"
-            data-leftformatestring="本页{count}条记录/共{total}条记录"
-            data-rightformatestring="第{pageNumber}页/共{totalPages}页"
-            data-pagenumberformatestring="{pageNumber}"
-            data-pagesizelistformatestring="每页显示{pageSize}条记录"
-            data-prevpagetext="上一页" data-nextpagetext="下一页"
-            data-prevgrouppagetext="上一组" data-nextgrouppagetext="下一组"
-            data-firstpagetext="首页" data-lastpagetext="尾页"
-            data-pageinput-placeholder="GO" data-pageinput-timeout="800"
-            data-pagesizelist="[5, 10, 20, 50, 100, 200]"
-            data-pagechanged='function (pageIndex, pageSize) {alert("page changed. pageIndex:" + pageIndex + ",pageSize:" + pageSize);};'
-            data-layoutscheme="lefttext,pagesizelist,firstpage,prevgrouppage,prevpage,pagenumber,nextpage,nextgrouppage,lastpage,pageinput,righttext">
-        </ul>
-    </nav>
-    <nav>
-        <ul class="pagination demo4">
-        </ul>
-    </nav>
-        </form>
+<body onload="init()">
+    <p class="lead">
+        <h1 class="mt-5 mx-3">一个 javascript 分页控件</h1>
+        <h4 class="mb-5 mx-3">基于 Bootstrap v5</h4>
+    </p>
+    <hr />
+    <form method="post" class="needs-validation row g-3 was-validated" novalidate>
+        <h1>Demo1：最简短代码示例</h1>
+        <nav>
+            <ul id="demo1" class="pagination">
+            </ul>
+        </nav>
+        <h1>Demo2：通过程序代码设置参数</h1>
+        <nav>
+            <ul id="demo2" class="pagination">
+            </ul>
+        </nav>
+        <h1>Demo3：通过HTML元素属性设置参数</h1>
+        <nav>
+            <ul class="pagination demo3" data-total="101" data-pageindex="1" data-pagesize="20" data-pagegroupsize="5"
+                data-leftformatestring="本页{count}条记录/共{total}条记录"
+                data-rightformatestring="第{pageNumber}页/共{totalPages}页"
+                data-pagenumberformatestring="{pageNumber}"
+                data-pagesizelistformatestring="每页显示{pageSize}条记录"
+                data-prevpagetext="上一页" data-nextpagetext="下一页"
+                data-prevgrouppagetext="上一组" data-nextgrouppagetext="下一组"
+                data-firstpagetext="首页" data-lastpagetext="尾页"
+                data-pageinput-placeholder="GO" data-pageinput-timeout="800"
+                data-pagesizelist="[5, 10, 20, 50, 100, 200]"
+                data-onpagechanged='alert("page changed. pageIndex:" + sender.pageIndex + ",pageSize:" + sender.pageSize);'
+                data-layoutscheme="lefttext,pagesizelist,firstpage,prevgrouppage,prevpage,pagenumber,nextpage,nextgrouppage,lastpage,pageinput,righttext">
+            </ul>
+        </nav>
+        <h1>Demo4：多个控件具有联动效果</h1>
+        <nav>
+            <ul class="pagination demo4" data-total="101" data-pageindex="1" data-pagesize="20" data-pagegroupsize="5"
+                data-leftformatestring="本页{count}条记录/共{total}条记录"
+                data-rightformatestring="第{pageNumber}页/共{totalPages}页"
+                data-pagenumberformatestring="{pageNumber}"
+                data-pagesizelistformatestring="每页显示{pageSize}条记录"
+                data-prevpagetext="上一页" data-nextpagetext="下一页"
+                data-prevgrouppagetext="上一组" data-nextgrouppagetext="下一组"
+                data-firstpagetext="首页" data-lastpagetext="尾页"
+                data-pageinput-placeholder="GO" data-pageinput-timeout="800"
+                data-pagesizelist="[5, 10, 20, 50, 100, 200]"
+                data-onpagechanged='alert("page changed. pageIndex:" + sender.pageIndex + ",pageSize:" + sender.pageSize);'
+                data-layoutscheme="lefttext,pagesizelist,firstpage,prevgrouppage,prevpage,pagenumber,nextpage,nextgrouppage,lastpage,pageinput,righttext">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="pagination demo5" data-total="101" data-pageindex="1" data-pagesize="20" data-pagegroupsize="5">
+            </ul>
+        </nav>
+    </form>
 </body>
 </html>

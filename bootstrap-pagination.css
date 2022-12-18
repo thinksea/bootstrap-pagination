@@ -1,28 +1,9 @@
 ﻿/*定义页码输入元素的样式*/
 .pagination .page-input {
-    float: left;
     width: 50px;
-    margin-left: -1px;
 }
 
-/*#region 修复分页尺寸列表控件样式*/
-.pagination .pagesize-fix-left {
-    -webkit-border-top-right-radius: 0px;
-    border-top-right-radius: 0px;
-    -webkit-border-bottom-right-radius: 0px;
-    border-bottom-right-radius: 0px;
+/*定义当前页码元素的样式，当控件为禁用状态时*/
+.page-item.active.disabled .page-link {
+    background-color: #dee2e6;
 }
-
-.pagination .pagesize-fix-center {
-    -moz-border-radius: 0px;
-    -webkit-border-radius: 0px;
-    border-radius: 0px;
-}
-
-.pagination .pagesize-fix-right {
-    -webkit-border-top-left-radius: 0px;
-    border-top-left-radius: 0px;
-    -webkit-border-bottom-left-radius: 0px;
-    border-bottom-left-radius: 0px;
-}
-/*#endregion*/

@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "noImplicitAny": false,
+        "noEmitOnError": true,
+        "removeComments": false,
+        "sourceMap": true,
+        "target": "es5",
+        "declaration": true //生成 d.ts 文件
+    },
+    "exclude": [
+        "node_modules",
+        "wwwroot"
+    ]
+}

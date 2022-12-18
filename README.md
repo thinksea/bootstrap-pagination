@@ -1,9 +1,14 @@
-# bootstrap-pagination
+﻿# bootstrap-pagination
 一个 javascript 分页控件，基于 bootstrap 样式。
 
 ![demo.png](images/demo.png)
 
 ---
+
+###### version：1.0.0
+
++ 从此版本开始采用 bootstrap v5 样式
++ 重要的：与之前的版本不兼容，调用方式略作改动，具体请参考 demo.htm
 
 ###### version：0.6.3
 
@@ -40,9 +45,9 @@
 使用控件的第一步是在你的网页 HTML 代码中添加下面引用，更加详细的代码示例可以参考项目文件“demo.htm”。
 
 ```html
-<script type="text/javascript" charset="utf-8" src="Scripts/jquery-1.11.0.min.js"></script>
-<link type="text/css" href="Scripts/bootstrap-3.3.1/css/bootstrap.min.css" rel="stylesheet" />
-<script type="text/javascript" charset="utf-8" src="Scripts/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<link type="text/css" href="https://cdn.staticfile.org/twitter-bootstrap/5.2.3/css/bootstrap.min.css" rel="stylesheet" />
+<script type="text/javascript" charset="utf-8" src="https://cdn.staticfile.org/twitter-bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
+<!--为了支持下拉菜单控件，如果此处引用“bootstrap.min.js”则需要在之前引入：https://cdn.staticfile.org/popper.js/2.11.6/umd/popper.min.js-->
 <link type="text/css" href="bootstrap-pagination.min.css" rel="stylesheet" />
 <script type="text/javascript" charset="utf-8" src="bootstrap-pagination.min.js"></script>
 ```
@@ -64,17 +69,15 @@
 
 ```javascript
 <script type="text/javascript">
-    $(function () {
-        var demo1 = BootstrapPagination($("#demo1"), {
-            //记录总数。
-            total: 101,
-            //当前页索引编号。从其开始（从0开始）的整数。
-            pageIndex: 2,
-            //当分页更改后引发此事件。
-            pageChanged: function (pageIndex, pageSize) {
-                alert("page changed. pageIndex:" + pageIndex + ",pageSize:" + pageSize)
-            },
-        });
+    var demo1 = new BootstrapPagination(document.getElementById("demo1"), {
+        //记录总数。
+        total: 101,
+        //当前页索引编号。从其开始（从0开始）的整数。
+        pageIndex: 2,
+        //当分页更改后引发此事件。
+        onPageChanged: function (sender: BootstrapPagination) {
+            alert("page changed. pageIndex:" + sender.pageIndex + ",pageSize:" + sender.pageSize)
+        },
     });
 </script>
 ```
@@ -94,48 +97,46 @@
 
 ```javascript
 <script type="text/javascript">
-    $(function () {
-        var demo2 = BootstrapPagination($("#demo1"), {
-            layoutScheme: "lefttext,pagesizelist,firstpage,prevgrouppage,prevpage,pagenumber,nextpage,nextgrouppage,lastpage,pageinput,righttext",
-            //记录总数。
-            total: 101,
-            //分页尺寸。指示每页最多显示的记录数量。
-            pageSize: 20,
-            //当前页索引编号。从其开始（从0开始）的整数。
-            pageIndex: 2,
-            //指示分页导航栏中最多显示的页索引数量。
-            pageGroupSize: 5,
-            //位于导航条左侧的输出信息格式化字符串
-            leftFormateString: "本页{count}条记录/共{total}条记录",
-            //位于导航条右侧的输出信息格式化字符串
-            rightFormateString: "第{pageNumber}页/共{totalPages}页",
-            //页码文本格式化字符串。
-            pageNumberFormateString: "{pageNumber}",
-            //分页尺寸输出格式化字符串
-            pageSizeListFormateString: "每页显示{pageSize}条记录",
-            //上一页导航按钮文本。
-            prevPageText: "上一页",
-            //下一页导航按钮文本。
-            nextPageText: "下一页",
-            //上一组分页导航按钮文本。
-            prevGroupPageText: "上一组",
-            //下一组分页导航按钮文本。
-            nextGroupPageText: "下一组",
-            //首页导航按钮文本。
-            firstPageText: "首页",
-            //尾页导航按钮文本。
-            lastPageText: "尾页",
-            //设置页码输入框中显示的提示文本。
-            pageInputPlaceholder: "GO",
-            //接受用户输入内容的延迟时间。单位：毫秒
-            pageInputTimeout: 800,
-            //分页尺寸列表。
-            pageSizeList: [5, 10, 20, 50, 100, 200],
-            //当分页更改后引发此事件。
-            pageChanged: function (pageIndex, pageSize) {
-                alert("page changed. pageIndex:" + pageIndex + ",pageSize:" + pageSize)
-            },
-        });
+    var demo2 = new BootstrapPagination(document.getElementById("demo1"), {
+        layoutScheme: "lefttext,pagesizelist,firstpage,prevgrouppage,prevpage,pagenumber,nextpage,nextgrouppage,lastpage,pageinput,righttext",
+        //记录总数。
+        total: 101,
+        //分页尺寸。指示每页最多显示的记录数量。
+        pageSize: 20,
+        //当前页索引编号。从其开始（从0开始）的整数。
+        pageIndex: 2,
+        //指示分页导航栏中最多显示的页索引数量。
+        pageGroupSize: 5,
+        //位于导航条左侧的输出信息格式化字符串
+        leftFormateString: "本页{count}条记录/共{total}条记录",
+        //位于导航条右侧的输出信息格式化字符串
+        rightFormateString: "第{pageNumber}页/共{totalPages}页",
+        //页码文本格式化字符串。
+        pageNumberFormateString: "{pageNumber}",
+        //分页尺寸输出格式化字符串
+        pageSizeListFormateString: "每页显示{pageSize}条记录",
+        //上一页导航按钮文本。
+        prevPageText: "上一页",
+        //下一页导航按钮文本。
+        nextPageText: "下一页",
+        //上一组分页导航按钮文本。
+        prevGroupPageText: "上一组",
+        //下一组分页导航按钮文本。
+        nextGroupPageText: "下一组",
+        //首页导航按钮文本。
+        firstPageText: "首页",
+        //尾页导航按钮文本。
+        lastPageText: "尾页",
+        //设置页码输入框中显示的提示文本。
+        pageInputPlaceholder: "GO",
+        //接受用户输入内容的延迟时间。单位：毫秒
+        pageInputTimeout: 800,
+        //分页尺寸列表。
+        pageSizeList: [5, 10, 20, 50, 100, 200],
+        //当分页更改后引发此事件。
+        onPageChanged: function (sender: BootstrapPagination) {
+            alert("page changed. pageIndex:" + sender.pageIndex + ",pageSize:" + sender.pageSize)
+        },
     });
 </script>
 ```
@@ -156,7 +157,7 @@
         data-firstpagetext="首页" data-lastpagetext="尾页"
         data-pageinput-placeholder="GO" data-pageinput-timeout="800"
         data-pagesizelist="[5, 10, 20, 50, 100, 200]"
-        data-pagechanged='function (pageIndex, pageSize) {alert("page changed. pageIndex:" + pageIndex + ",pageSize:" + pageSize);};'
+        data-onpagechanged='alert("page changed. pageIndex:" + sender.pageIndex + ",pageSize:" + sender.pageSize);'
         data-layoutscheme="lefttext,pagesizelist,firstpage,prevgrouppage,prevpage,pagenumber,nextpage,nextgrouppage,lastpage,pageinput,righttext">
     </ul>
 </nav>
@@ -166,9 +167,7 @@
 
 ```javascript
 <script type="text/javascript">
-    $(function () {
-        var demo3 = BootstrapPagination($(".demo3"));
-    });
+    var demo3 = new BootstrapPagination(document.querySelector(".demo3"));
 </script>
 ```
 
@@ -188,7 +187,7 @@
         data-firstpagetext="首页" data-lastpagetext="尾页"
         data-pageinput-placeholder="GO" data-pageinput-timeout="800"
         data-pagesizelist="[5, 10, 20, 50, 100, 200]"
-        data-pagechanged='function (pageIndex, pageSize) {alert("page changed. pageIndex:" + pageIndex + ",pageSize:" + pageSize);};'
+        data-onpagechanged='alert("page changed. pageIndex:" + sender.pageIndex + ",pageSize:" + sender.pageSize);'
         data-layoutscheme="lefttext,pagesizelist,firstpage,prevgrouppage,prevpage,pagenumber,nextpage,nextgrouppage,lastpage,pageinput,righttext">
     </ul>
 </nav>
@@ -203,8 +202,6 @@
 
 ```javascript
 <script type="text/javascript">
-    $(function () {
-        var demo4 = BootstrapPagination($(".demo4"));
-    });
+    var demo4 = new BootstrapPagination(document.querySelector(".demo4"));
 </script>
 ```
