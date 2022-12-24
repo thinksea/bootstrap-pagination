@@ -191,9 +191,8 @@
         data-layoutscheme="lefttext,pagesizelist,firstpage,prevgrouppage,prevpage,pagenumber,nextpage,nextgrouppage,lastpage,pageinput,righttext">
     </ul>
 </nav>
-一般情况这里显示你的数据列表
 <nav>
-    <ul class="pagination demo4">
+    <ul class="pagination demo5" data-total="101" data-pageindex="1" data-pagesize="20" data-pagegroupsize="5">
     </ul>
 </nav>
 ```
@@ -202,6 +201,20 @@
 
 ```javascript
 <script type="text/javascript">
-    var demo4 = new BootstrapPagination(document.querySelector(".demo4"));
+    var demo4 = new BootstrapPagination(document.querySelector(".demo4"), {
+        //当分页更改后引发此事件。
+        onPageChanged: function (sender) {
+            demo5.pageIndex = sender.pageIndex;
+            demo5.pageSize = sender.pageSize;
+        },
+    });
+    var demo5 = new BootstrapPagination(document.querySelector(".demo5"), {
+        pageGroupSize: 5,
+        //当分页更改后引发此事件。
+        onPageChanged: function (sender) {
+            demo4.pageIndex = sender.pageIndex;
+            demo4.pageSize = sender.pageSize;
+        },
+    });
 </script>
 ```
