@@ -1,7 +1,7 @@
 /**
  * 一个 javascript 分页控件，基于 bootstrap v5 样式。
- * version：1.0.0
- * last change：2022-12-18
+ * version：1.1.0
+ * last change：2022-12-24
  * projects url：https://github.com/thinksea/bootstrap-pagination
  */
 declare class BootstrapPagination {
@@ -15,8 +15,7 @@ declare class BootstrapPagination {
     private options;
     /**
      * 当分页更改后引发此事件。
-     * @param pageIndex 新的分页索引。
-     * @param pageSize 新的分页尺寸。
+     * @param sender 引发此事件的对象实例。
      */
     onPageChanged: (sender: BootstrapPagination) => void;
     /**
@@ -25,7 +24,7 @@ declare class BootstrapPagination {
     get total(): GLint;
     /**
      * 设置记录总数。
-     * @param value 记录总数。
+     * @param value 记录总数。从0开始的整数。
      */
     set total(value: GLint);
     /**
@@ -34,7 +33,7 @@ declare class BootstrapPagination {
     get pageIndex(): GLint;
     /**
      * 设置分页索引。
-     * @param value 分页索引
+     * @param value 分页索引编号。从0开始的整数。
      */
     set pageIndex(value: GLint);
     /**
@@ -43,7 +42,7 @@ declare class BootstrapPagination {
     get pageSize(): GLint;
     /**
      * 设置分页尺寸。
-     * @param value 分页尺寸
+     * @param value 分页尺寸。
      */
     set pageSize(value: GLint);
     /**
@@ -61,7 +60,7 @@ declare class BootstrapPagination {
     get disabled(): boolean;
     /**
      * 设置一个值，指示控件是否为禁用状态。默认值为 false。
-     * @param value 分页尺寸
+     * @param value 设置为 true 禁用控件；否则为 false。
      */
     set disabled(value: boolean);
     /**
@@ -94,10 +93,12 @@ declare class BootstrapPagination {
     private createPageInput;
     /**
      * 当分页索引更改后引发此事件。
+     * @param newPageIndex 新的分页索引编号。
      */
     private onPageIndexChanged;
     /**
      * 当分页尺寸更改后引发此事件。
+     * @param newPageSize 新的分页尺寸。
      */
     private onPageSizeChanged;
     /**
@@ -130,7 +131,7 @@ declare namespace BootstrapPagination {
      */
     interface Options {
         /**
-         * 记录总数。
+         * 记录总数。从0开始的整数。
          */
         total?: GLint;
         /**
@@ -138,7 +139,7 @@ declare namespace BootstrapPagination {
          */
         pageSize?: GLint;
         /**
-         * 当前页索引编号。从其开始（从0开始）的整数。
+         * 当前页索引编号。从0开始的整数。
          */
         pageIndex?: GLint;
         /**

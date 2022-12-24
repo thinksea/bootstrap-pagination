@@ -1,7 +1,7 @@
 /**
  * 一个 javascript 分页控件，基于 bootstrap v5 样式。
- * version：1.0.0
- * last change：2022-12-18
+ * version：1.1.0
+ * last change：2022-12-24
  * projects url：https://github.com/thinksea/bootstrap-pagination
  */
 var BootstrapPagination = /** @class */ (function () {
@@ -118,9 +118,12 @@ var BootstrapPagination = /** @class */ (function () {
         },
         /**
          * 设置记录总数。
-         * @param value 记录总数。
+         * @param value 记录总数。从0开始的整数。
          */
         set: function (value) {
+            if (value < 0) {
+                throw 'The value of "value" is out of range. It must be >= 0.';
+            }
             if (this.options.total !== value) {
                 this.options.total = value;
                 this.fixPageIndex();
@@ -139,9 +142,12 @@ var BootstrapPagination = /** @class */ (function () {
         },
         /**
          * 设置分页索引。
-         * @param value 分页索引
+         * @param value 分页索引编号。从0开始的整数。
          */
         set: function (value) {
+            if (value < 0) {
+                throw 'The value of "value" is out of range. It must be >= 0.';
+            }
             if (this.options.pageIndex !== value) {
                 this.options.pageIndex = value;
                 this.fixPageIndex();
@@ -160,9 +166,12 @@ var BootstrapPagination = /** @class */ (function () {
         },
         /**
          * 设置分页尺寸。
-         * @param value 分页尺寸
+         * @param value 分页尺寸。
          */
         set: function (value) {
+            if (value < 1) {
+                throw 'The value of "value" is out of range. It must be >= 1.';
+            }
             if (this.options.pageSize !== value) {
                 this.options.pageSize = value;
                 this.fixPageIndex();
@@ -184,6 +193,9 @@ var BootstrapPagination = /** @class */ (function () {
          * @param value 分页导航栏中最多显示的页索引数量。
          */
         set: function (value) {
+            if (value < 1) {
+                throw 'The value of "value" is out of range. It must be >= 1.';
+            }
             if (this.options.pageGroupSize !== value) {
                 this.options.pageGroupSize = value;
                 this.render();
@@ -201,7 +213,7 @@ var BootstrapPagination = /** @class */ (function () {
         },
         /**
          * 设置一个值，指示控件是否为禁用状态。默认值为 false。
-         * @param value 分页尺寸
+         * @param value 设置为 true 禁用控件；否则为 false。
          */
         set: function (value) {
             if (this.options.disabled !== value) {
@@ -274,7 +286,7 @@ var BootstrapPagination = /** @class */ (function () {
     /**
      * 创建分页尺寸列表控件。
      */
-    BootstrapPagination.prototype.createPageSizeList = function (align) {
+    BootstrapPagination.prototype.createPageSizeList = function () {
         var li = document.createElement('li');
         li.className = 'page-item dropdown';
         var el2 = document.createElement('a');
@@ -342,6 +354,7 @@ var BootstrapPagination = /** @class */ (function () {
     //#region 事件。
     /**
      * 当分页索引更改后引发此事件。
+     * @param newPageIndex 新的分页索引编号。
      */
     BootstrapPagination.prototype.onPageIndexChanged = function (newPageIndex) {
         if (typeof (newPageIndex) === 'undefined') {
@@ -358,6 +371,7 @@ var BootstrapPagination = /** @class */ (function () {
     };
     /**
      * 当分页尺寸更改后引发此事件。
+     * @param newPageSize 新的分页尺寸。
      */
     BootstrapPagination.prototype.onPageSizeChanged = function (newPageSize) {
         if (typeof (newPageSize) === 'undefined') {
@@ -528,19 +542,7 @@ var BootstrapPagination = /** @class */ (function () {
                 case "pagesizelist":
                     //#region 处理分页尺寸列表控件
                     if (this.options.pageSizeList) {
-                        var align = 0;
-                        if (layoutItems.length > 1) {
-                            if (i_layout > 0 && i_layout < layoutItems.length - 1) { //在中间
-                                align = 2;
-                            }
-                            else if (i_layout == 0) { //在左侧
-                                align = 1;
-                            }
-                            else if (i_layout == layoutItems.length - 1) { //在右侧
-                                align = 3;
-                            }
-                        }
-                        lis[lis.length] = this.createPageSizeList(align);
+                        lis[lis.length] = this.createPageSizeList();
                     }
                     //#endregion
                     break;
