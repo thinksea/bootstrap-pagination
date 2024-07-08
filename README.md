@@ -5,6 +5,10 @@
 
 ---
 
+###### version：1.1.0
+
++ 弃用了过期的方法（String.prototype.substr）
+
 ###### version：1.0.0
 
 + 从此版本开始采用 bootstrap v5 样式

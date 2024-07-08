@@ -1,6 +1,6 @@
-/**
+﻿/**
  * 一个 javascript 分页控件，基于 bootstrap v5 样式。
- * version：1.1.0
+ * version：1.2.0
  * last change：2022-12-24
  * projects url：https://github.com/thinksea/bootstrap-pagination
  */

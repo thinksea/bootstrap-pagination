@@ -1,10 +1,18 @@
 {
+    "compileOnSave": true, //当保存 TypeScript 文件时立即编译。
     "compilerOptions": {
-        "noImplicitAny": false,
-        "noEmitOnError": true,
-        "removeComments": false,
-        "sourceMap": true,
-        "target": "es5",
+        //"strict": true, //是否启用严格模式
+        "noImplicitAny": false, //不允许变量或函数参数具有隐式 any 类型。
+        //"noImplicitThis": false, //不允许 this 上下文隐式定义。
+        //"strictNullChecks": false, //不允许出现 null 或 undefined 的可能性。
+        //"strictPropertyInitialization": false, //验证构造函数内部初始化前后已定义的属性。
+        //"strictBindCallApply": false, //对 bind, call, apply 更严格的类型检测。
+        //"strictFunctionTypes": false //对函数参数进行严格逆变比较。
+        "noEmitOnError": true, //出错后，不输出文件。默认值false
+        "removeComments": false, //去除注释。默认值false
+        "sourceMap": true, //生成对应的 map 文件。默认值false
+        "target": "es5", //输出代码 ES 版本。默认值"es3"
+        "emitBOM": true, //在输出文件头添加 utf-8 (BOM)字节标记。默认值false
         "declaration": true //生成 d.ts 文件
     },
     "exclude": [
