@@ -1,7 +1,7 @@
 ﻿/**
  * 一个 javascript 分页控件，基于 bootstrap v5 样式。
- * version：1.2.0
- * last change：2022-12-24
+ * version：1.2.2
+ * last change：2026-05-08
  * projects url：https://github.com/thinksea/bootstrap-pagination
  */
 declare class BootstrapPagination {
@@ -17,7 +17,7 @@ declare class BootstrapPagination {
      * 当分页更改后引发此事件。
      * @param sender 引发此事件的对象实例。
      */
-    onPageChanged: (sender: BootstrapPagination) => void;
+    onPageChanged: ((sender: BootstrapPagination) => void) | null;
     /**
      * 获取记录总数。
      */
@@ -202,7 +202,7 @@ declare namespace BootstrapPagination {
          * 当分页更改后引发此事件。
          * @param sender 引发此事件的控件。
          */
-        onPageChanged?: (sender: BootstrapPagination) => void;
+        onPageChanged?: ((sender: BootstrapPagination) => void) | null;
         /**
          * 布局方案。指示按照什么样的排列顺序显示哪些元素。
          */
@@ -219,6 +219,6 @@ declare namespace BootstrapPagination {
      */
     function isMobile(): boolean;
     namespace isMobile {
-        let _isMobile: boolean;
+        let _isMobile: boolean | null;
     }
 }

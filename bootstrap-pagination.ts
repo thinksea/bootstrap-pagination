@@ -1,7 +1,7 @@
 ﻿/**
  * 一个 javascript 分页控件，基于 bootstrap v5 样式。
- * version：1.2.0
- * last change：2022-12-24
+ * version：1.2.2
+ * last change：2026-05-08
  * projects url：https://github.com/thinksea/bootstrap-pagination
  */
 class BootstrapPagination {
@@ -13,7 +13,7 @@ class BootstrapPagination {
     /**
      * 参数设置。
      */
-    private options: BootstrapPagination.Options = {
+    private options: Required<Omit<BootstrapPagination.Options, 'onPageChanged'>> = {
         total: 0,
         pageSize: 20,
         pageIndex: 0,
@@ -32,13 +32,14 @@ class BootstrapPagination {
         pageInputTimeout: 800,
         pageSizeList: [5, 10, 20, 50, 100, 200],
         layoutScheme: "lefttext,pagesizelist,firstpage,prevgrouppage,prevpage,pagenumber,nextpage,nextgrouppage,lastpage,pageinput,righttext",
+        disabled: false,
     };
 
     /**
      * 当分页更改后引发此事件。
      * @param sender 引发此事件的对象实例。
      */
-    public onPageChanged: (sender: BootstrapPagination) => void;
+    public onPageChanged: ((sender: BootstrapPagination) => void) | null = null;
 
     /**
      * 获取记录总数。
@@ -515,41 +516,41 @@ class BootstrapPagination {
 
         //#region 根据 HTML 标签上的 data- 属性初始化参数。
         if (obj.getAttribute("data-layoutscheme") !== null)
-            this.options.layoutScheme = obj.getAttribute("data-layoutscheme");
+            this.options.layoutScheme = obj.getAttribute("data-layoutscheme")!;
         if (obj.getAttribute("data-total") !== null)
-            this.options.total = parseInt(obj.getAttribute("data-total"));
+            this.options.total = parseInt(obj.getAttribute("data-total")!);
         if (obj.getAttribute("data-pagesize") !== null)
-            this.options.pageSize = parseInt(obj.getAttribute("data-pagesize"));
+            this.options.pageSize = parseInt(obj.getAttribute("data-pagesize")!);
         if (obj.getAttribute("data-pagegroupsize") !== null)
-            this.options.pageGroupSize = parseInt(obj.getAttribute("data-pagegroupsize"));
+            this.options.pageGroupSize = parseInt(obj.getAttribute("data-pagegroupsize")!);
         if (obj.getAttribute("data-pageindex") !== null)
-            this.options.pageIndex = parseInt(obj.getAttribute("data-pageindex"));
+            this.options.pageIndex = parseInt(obj.getAttribute("data-pageindex")!);
         if (obj.getAttribute("data-leftformatestring") !== null)
-            this.options.leftFormateString = obj.getAttribute("data-leftformatestring");
+            this.options.leftFormateString = obj.getAttribute("data-leftformatestring")!;
         if (obj.getAttribute("data-rightformatestring") !== null)
-            this.options.rightFormateString = obj.getAttribute("data-rightformatestring");
+            this.options.rightFormateString = obj.getAttribute("data-rightformatestring")!;
         if (obj.getAttribute("data-pagenumberformatestring") !== null)
-            this.options.pageNumberFormateString = obj.getAttribute("data-pagenumberformatestring");
+            this.options.pageNumberFormateString = obj.getAttribute("data-pagenumberformatestring")!;
         if (obj.getAttribute("data-pagesizelistformatestring") !== null)
-            this.options.pageSizeListFormateString = obj.getAttribute("data-pagesizelistformatestring");
+            this.options.pageSizeListFormateString = obj.getAttribute("data-pagesizelistformatestring")!;
         if (obj.getAttribute("data-prevpagetext") !== null)
-            this.options.prevPageText = obj.getAttribute("data-prevpagetext");
+            this.options.prevPageText = obj.getAttribute("data-prevpagetext")!;
         if (obj.getAttribute("data-nextpagetext") !== null)
-            this.options.nextPageText = obj.getAttribute("data-nextpagetext");
+            this.options.nextPageText = obj.getAttribute("data-nextpagetext")!;
         if (obj.getAttribute("data-prevgrouppagetext") !== null)
-            this.options.prevGroupPageText = obj.getAttribute("data-prevgrouppagetext");
+            this.options.prevGroupPageText = obj.getAttribute("data-prevgrouppagetext")!;
         if (obj.getAttribute("data-nextgrouppagetext") !== null)
-            this.options.nextGroupPageText = obj.getAttribute("data-nextgrouppagetext");
+            this.options.nextGroupPageText = obj.getAttribute("data-nextgrouppagetext")!;
         if (obj.getAttribute("data-firstpagetext") !== null)
-            this.options.firstPageText = obj.getAttribute("data-firstpagetext");
+            this.options.firstPageText = obj.getAttribute("data-firstpagetext")!;
         if (obj.getAttribute("data-lastpagetext") !== null)
-            this.options.lastPageText = obj.getAttribute("data-lastpagetext");
+            this.options.lastPageText = obj.getAttribute("data-lastpagetext")!;
         if (obj.getAttribute("data-pageinput-placeholder") !== null)
-            this.options.pageInputPlaceholder = obj.getAttribute("data-pageinput-placeholder");
+            this.options.pageInputPlaceholder = obj.getAttribute("data-pageinput-placeholder")!;
         if (obj.getAttribute("data-pageinput-timeout") !== null)
-            this.options.pageInputTimeout = parseInt(obj.getAttribute("data-pageinput-timeout"));
+            this.options.pageInputTimeout = parseInt(obj.getAttribute("data-pageinput-timeout")!);
         if (obj.getAttribute("data-pagesizelist") !== null) {
-            this.options.pageSizeList = JSON.parse(obj.getAttribute("data-pagesizelist"));
+            this.options.pageSizeList = JSON.parse(obj.getAttribute("data-pagesizelist")!);
         }
         if (obj.getAttribute("data-disabled") !== null)
             this.options.disabled = obj.getAttribute("data-disabled") !== 'false';
@@ -558,7 +559,7 @@ class BootstrapPagination {
             this.onPageChanged = option.onPageChanged;
         }
         else if (obj.getAttribute("data-onpagechanged") !== null) { //尝试从 HTML 元素的 data-onpagechanged 属性加载事件。
-            let attrPageChanged = obj.getAttribute("data-onpagechanged");
+            let attrPageChanged = obj.getAttribute("data-onpagechanged")!;
             if (typeof (attrPageChanged) == "function") {
                 this.onPageChanged = attrPageChanged;
             }
@@ -578,10 +579,18 @@ class BootstrapPagination {
         }
         //#endregion
 
-        if (typeof (option) !== 'undefined') {
-            for (let attr in option) { //合并由用户代码设置的参数
-                this.options[attr] = option[attr];
-            }
+        if (option) {
+            //for (let attr in option) { //合并由用户代码设置的参数
+            //    this.options[attr] = option[attr];
+            //}
+
+            //说明：为了兼容更广泛的 JavaScript 环境，下面的【JS ES2018 版本】代码并未启用。存在的已知问题是：如果 option 对象中包含 onPageChanged 属性，那么这个事件处理函数将被错误地复制到 this.options 对象中，这是不希望的行为。为了解决这个问题，我们需要在复制属性后排除 onPageChanged 属性。
+            Object.assign(this.options, option); //合并由用户代码设置的参数（只复制数据属性）。替换掉上面注释掉的 for 循环，使用更简洁的 Object.assign() 方法。
+            delete (this.options as any).onPageChanged; //删除 this.options 对象中的 onPageChanged 属性，避免将事件处理函数错误地复制到 this.options 对象中。
+
+            //【JS ES2018 版本】说明：下面两行代码需要在 ES2018 或更高版本的 JavaScript 环境中才能正常工作，因为它们使用了对象解构赋值和剩余属性语法。仅保留代码为等到未来 JavaScript 环境普遍支持 ES2018 版本后使用。
+            //const { onPageChanged, ...dataOptions } = option; //使用对象解构赋值语法，从 option 对象中提取 onPageChanged 属性，并将剩余的属性保存在 dataOptions 对象中。
+            //Object.assign(this.options, dataOptions); //合并由用户代码设置的参数（只复制数据属性）。替换掉上面注释掉的 for 循环，使用更简洁的 Object.assign() 方法。
         }
 
         this.fixPageIndex();
@@ -667,7 +676,7 @@ namespace BootstrapPagination {
          * 当分页更改后引发此事件。
          * @param sender 引发此事件的控件。
          */
-        onPageChanged?: (sender: BootstrapPagination) => void,
+        onPageChanged?: ((sender: BootstrapPagination) => void) | null,
         /**
          * 布局方案。指示按照什么样的排列顺序显示哪些元素。
          */
@@ -702,7 +711,7 @@ namespace BootstrapPagination {
         return isMobile._isMobile;
     }
     export namespace isMobile {
-        export let _isMobile: boolean = null; //用于缓冲结果，避免冗余计算过程。
+        export let _isMobile: boolean | null = null; //用于缓冲结果，避免冗余计算过程。
     }
 
     //#endregion
