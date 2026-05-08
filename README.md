@@ -5,6 +5,10 @@
 
 ---
 
+###### version：1.2.2
+
++ 符合严格的JS语法标准
+
 ###### version：1.1.0
 
 + 弃用了过期的方法（String.prototype.substr）
