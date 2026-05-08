@@ -205,6 +205,8 @@ class BootstrapPagination {
         let li = document.createElement('li');
         li.className = 'page-item';
         let input = document.createElement('input');
+        input.autocomplete = 'off'; //不需要自动完成
+        input.setAttribute('aria-label', '跳转到页码');
         if (BootstrapPagination.isMobile()) {
             input.type = "number";
             input.min = '0';
